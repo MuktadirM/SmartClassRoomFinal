@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="Presentation.WPF.Controls.CustomListItem.AddedCourseListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.WPF.Controls.CustomListItem"
+             xmlns:vm="clr-namespace:Presentation.Admin.ViewModels.DesignTime"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="200">
+    <Grid Margin="5" Background="LightGray"
+          DataContext="{x:Static vm:StudentOfferedCourseListItemDesignViewModel.Instance}"
+          >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+            <TextBlock Text="Information System" Padding="5,5,0,0" FontSize="14"/>
+            <TextBlock Text="Latifah" Padding="5,0,0,5" FontSize="10"/>
+        </StackPanel>
+        <Button Grid.Column="1" Content="Remove"
+                Background="Red"
+                Padding="2"
+                Margin="5"
+                Command="{}"
+                />
+    </Grid>
+</UserControl>

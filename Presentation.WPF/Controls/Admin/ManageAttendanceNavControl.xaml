@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Presentation.Controls.ManageAttendanceNavControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.Controls"
+             xmlns:CustomMenu="clr-namespace:Presentation.WPF.Controls.CustomMenu"
+             xmlns:converters="clr-namespace:Presentation.WPF.Converters"
+             xmlns:vm="clr-namespace:Presentation.Admin.ViewModels"
+             xmlns:nav="clr-namespace:Presentation.WPF.State.Navigators"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter" />
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource BrushPrimary}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <CustomMenu:MenuButton Grid.Column="0" Margin="0,0,0,0" Padding="5,0,0,0"  Text="Students" GroupName="NavMenu"
+                                Command ="{Binding UpdateCurrentViewModelCommand}"
+                                CommandParameter="{x:Static nav:MAViewType.Students}"
+                                IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:StudentsViewModel}}"
+                               />
+        <CustomMenu:MenuButton Grid.Column="1"  Margin="0,0,0,0" Padding="5,0,0,0"  Text="Add Student" GroupName="NavMenu" 
+                                Command ="{Binding UpdateCurrentViewModelCommand}"
+                                CommandParameter="{x:Static nav:MAViewType.AddStudent}"
+                                IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:AddStudentViewModel}}"
+                               />
+            <CustomMenu:MenuButton Grid.Column="2" Margin="0,0,0,0" Padding="5,0,0,0"  Text="Add Face" GroupName="NavMenu"
+                               Command ="{Binding UpdateCurrentViewModelCommand}"
+                               CommandParameter="{x:Static nav:MAViewType.AddFace}"
+                               IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:AddFaceViewModel}}"
+                               />
+        <CustomMenu:MenuButton Grid.Column="3" Margin="0,0,0,0" Padding="5,0,0,0"  Text="Modify Attendance" GroupName="NavMenu"
+                                Command ="{Binding UpdateCurrentViewModelCommand}"
+                                CommandParameter="{x:Static nav:MAViewType.ModifyAttendance}"
+                                IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:ModifyAttendanceViewModel}}"
+                               />
+    </Grid>
+</UserControl>

@@ -1,0 +1,367 @@
+﻿<UserControl x:Class="Presentation.UsersV.Views.TakeAttendance"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.UsersV.Views"
+             xmlns:converters="clr-namespace:Presentation.WPF.Converters"
+             xmlns:vm="clr-namespace:Presentation.UsersV.ViewModels.DesignTime"
+             xmlns:customList="clr-namespace:Presentation.WPF.Controls.CustomListItem"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <converters:PathToImageConverter x:Key="PathToImageConverter"/>
+        <converters:BooleanToVisiblityConverter x:Key="BooleanToVisiblityConverter"/>
+        <converters:StringRGBToBrushConverter x:Key="StringRGBToBrushConverter"/>
+        
+        <!--#region Menu Text Style-->
+        <Style x:Key="MenuTextStyle" TargetType="{x:Type TextBlock}">
+
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+
+            <!--to change foreground on MouseOver and Menu item Selection-->
+
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ToggleButton}}" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ToggleButton}}" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+
+        </Style>
+        <!--#endregion-->
+
+        <Style x:Key="MenuButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <!--Column for Text-->
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextBlock.FontWeight="Bold"
+                                    TextBlock.Foreground="{StaticResource BrushPrimaryDark}"
+                                    />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!--Trigger to set our toggle button as checked on MainWindow Startup-->
+                            <Trigger Property="IsChecked"  Value="True">
+                                <Setter Property="Background" Value="{StaticResource BrushPrimary}"/>
+                            </Trigger>
+                            <!--Trigger to set our toggle button mouse over color -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource BrushPrimary}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource BrushPrimary}">
+            <StackPanel  VerticalAlignment="Center">
+                <TextBlock Text="Take Attendance" FontSize="30"  HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" 
+              d:DataContext="{x:Static vm:AttendanceListDesignViewModel.Instance}" 
+              Background="{StaticResource ForegroundLightBrush}">
+                
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding Items}"
+                              SelectedItem="{Binding SelectedStudent}"
+                                  >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Content -->
+                                <Grid x:Name="background" Background="WhiteSmoke">
+
+                                    <Grid x:Name="container" Background="Transparent">
+                                        <Grid.ColumnDefinitions>
+                                            <!-- New Message Indicator Bar -->
+                                            <!-- Profile picture -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Main content -->
+                                            <ColumnDefinition Width="*" />
+
+                                            <!-- Student Attendance -->
+                                            <ColumnDefinition Width="Auto" />
+
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- New Message Indicator Bar -->
+                                        <Border Background="Red" 
+                                    Width="4"
+                                    HorizontalAlignment="Left"
+                                    Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisiblityConverter}, ConverterParameter=True}"
+                                    />
+
+                                        <!-- Profile picture padding -->
+                                        <Border Grid.Column="0" 
+                                    Padding="8 15"
+                                    >
+                                            <!-- Profile picture background -->
+                                            <Border Background="{Binding  ProfilePictureRGB, Converter={StaticResource StringRGBToBrushConverter}}"
+                                        Height="40"
+                                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                                                <!-- Profile picture initials -->
+                                                <TextBlock Text="{Binding Initials}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{StaticResource ForegroundLightBrush}"
+                                               FontSize="{StaticResource FontSizeLarge}"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               />
+                                            </Border>
+                                        </Border>
+
+                                        <!-- Main content -->
+                                        <Border Grid.Column="1" Padding="0 0 15 0">
+                                            <StackPanel VerticalAlignment="Center">
+                                                <!-- Name-->
+                                                <TextBlock Text="{Binding Name}"
+                                                Padding="0 0 0 2"
+                                                Foreground="{StaticResource WordBlueBrush}"
+                                                TextTrimming="CharacterEllipsis"
+                                                FontFamily="{StaticResource LatoRegular}"
+                                                />
+                                                <!-- Message -->
+                                                <TextBlock Text="{Binding Matric}"
+                                               Padding="0 2 0 0"
+                                               Foreground="{StaticResource ForegroundDarkBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               />
+                                                <TextBlock Text="{Binding CourseName}"
+                                               Padding="0 2 0 0"
+                                               Foreground="{StaticResource ForegroundDarkBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               />
+                                                <TextBlock Text="{Binding LastTakenAt}"
+                                               Padding="0 2 0 0"
+                                               Foreground="{StaticResource ForegroundDarkBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               />
+
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Column="2" Padding="10" HorizontalAlignment="Right" Margin="50,0,0,0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <RadioButton Grid.Column="0" GroupName="{Binding Matric}" Content="Absent" Width="60" Height="30"
+                                                     IsChecked="{Binding IsAbsent, Mode=TwoWay}" Command="{Binding  RelativeSource = {RelativeSource    FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AttendanceChanged}" CommandParameter="Absent"
+                                                     Style="{StaticResource MenuButtonStyle}"
+                                                     />
+                                                <RadioButton Grid.Column="1" GroupName="{Binding Matric}" Content="Present"  Width="60" Height="30"
+                                                     IsChecked="{Binding IsPresent, Mode=TwoWay}" Command="{Binding RelativeSource = {RelativeSource    FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AttendanceChanged}" CommandParameter="Present"
+                                                     Style="{StaticResource MenuButtonStyle}"
+                                                     />
+                                                <RadioButton Grid.Column="2" GroupName="{Binding Matric}" Content="Excause"  Width="60" Height="30"
+                                                     IsChecked="{Binding IsExcuase, Mode=TwoWay}" Command="{Binding RelativeSource = {RelativeSource    FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AttendanceChanged}" CommandParameter="Excause"
+                                                     Style="{StaticResource MenuButtonStyle}"
+                                                     />
+                                                <RadioButton Grid.Column="3"  GroupName="{Binding Matric}" Content="UnDetected"  Width="80" Height="30"
+                                                     IsChecked="{Binding NotTaken, Mode=TwoWay}" Command="{Binding RelativeSource = {RelativeSource    FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AttendanceChanged}" CommandParameter="Not Taken"
+                                                     Style="{StaticResource MenuButtonStyle}"
+                                                     />
+                                            </Grid>
+                                        </Border>
+
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </Grid>
+            <Grid Grid.Column="1" Background="AliceBlue">
+                <Grid.RowDefinitions>
+                    <!--Course Selection Part-->
+                    <RowDefinition Height="auto"/>
+                    <!--Selected Course Details-->
+                    <RowDefinition Height="auto"/>
+                    <!--Attendance Part-->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Padding="3" BorderThickness="1" BorderBrush="Wheat">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <!--Combox-->
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Padding="4" Grid.Column="0" VerticalAlignment="Center" Text="Select a course : "/>
+                        <ComboBox Grid.Column="1" 
+                                  Margin="0,0,5,0" 
+                                  Padding="7"
+                                  ItemsSource="{Binding CourseListItems}"
+                                  SelectedIndex="0"
+                                  SelectedItem="{Binding SelectedCourseItem}"
+                                  >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text=" - "/>
+                                        <TextBlock Text="{Binding LecturerName}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Padding="6" Grid.Column="2" Content="Load Student"
+                                Command="{Binding LoadStudent}"
+                                />
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" Height="150">
+                    <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                        <TextBlock HorizontalAlignment="Center" Text="Selected Course Info"
+                                   FontSize="{StaticResource FontSizeRegular}"
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   />
+                        <Border BorderThickness="1" BorderBrush="Wheat" Margin="20" Padding="10">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="3">
+                                    <TextBlock Text="Course Name : "/>
+                                    <TextBlock Text="{Binding SelectedCourseItem.Name}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"  Margin="3">
+                                    <TextBlock Text="Registred Student : "/>
+                                    <TextBlock Text="0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"  Margin="3">
+                                    <TextBlock Text="Last Update : "/>
+                                    <TextBlock Text="{Binding SelectedCourseItem.JoinDate}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <!--Image Selection Field-->
+                        <RowDefinition Height="*"/>
+                        <!--Look for attendance-->
+                        <RowDefinition Height="auto"/>
+                        <!--Change attendance-->
+                        <RowDefinition Height="auto"/>
+                        <!--Submit final attendance-->
+                        <RowDefinition Height="auto"/>
+                        <!--Last Margin-->
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,10">
+                        <Border  BorderBrush="{StaticResource BackgroundLightBrush}" BorderThickness="2">
+                            <StackPanel Orientation="Vertical"
+                        >
+                                <TextBlock Text="{Binding SelectImageFor}"
+                           Margin="0,10,0,0"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           FontFamily="{StaticResource LatoRegular}"
+                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="You can select only one image"
+                           Margin="0,5,0,5"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           FontFamily="{StaticResource LatoRegular}"
+                           HorizontalAlignment="Center"/>
+
+                                <ListView ItemsSource="{Binding FilesPath}"
+                                  BorderThickness="0"
+                                  >
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
+                                        RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                        ItemWidth="{Binding (ListView.View).ItemWidth, 
+                                        RelativeSource={RelativeSource AncestorType=ListView}}"
+                                       
+                                        ItemHeight="{Binding (ListView.View).ItemHeight, 
+                                        RelativeSource={RelativeSource AncestorType=ListView}}" />
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Vertical">
+                                                <Image Height="190" Width="200"
+                                               Source="{Binding FilePath,Converter={StaticResource PathToImageConverter}}"
+                                               />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+                            </StackPanel>
+                        </Border>
+                        <Button VerticalAlignment="Bottom" Content="Add Images" Height="40"
+                        Command="{Binding ItemSelected}"
+                        />
+                    </Grid>
+
+                    <Button Grid.Row="1" VerticalAlignment="Bottom" Content="Look for Attendance" Height="40"
+                            Margin="0,0,0,5"
+                        Command="{Binding ProcessAttendance}"
+                        />
+                    <Button Grid.Row="2" VerticalAlignment="Bottom" Content="Change Attendance" Height="40"
+                            Margin="0,0,0,5"
+                        Command="{Binding ChangeAttendance}"
+                        />
+                    <Button Grid.Row="3" VerticalAlignment="Bottom" Content="Sumbit Attendance" Height="40"
+                        Command="{Binding SubmitAttendance}"
+                        />
+                    <Border Grid.Row="3" Height="30">
+                        
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

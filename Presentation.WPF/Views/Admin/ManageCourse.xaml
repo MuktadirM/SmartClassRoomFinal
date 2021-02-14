@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Presentation.Admin.Views.ManageCourse"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.Admin.Views"
+             xmlns:converters="clr-namespace:Presentation.WPF.Converters"
+             xmlns:vm="clr-namespace:Presentation.Admin.ViewModels"
+             xmlns:nav="clr-namespace:Presentation.WPF.State.Navigators"
+             xmlns:CustomMenu="clr-namespace:Presentation.WPF.Controls.CustomMenu"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter" />
+    </UserControl.Resources>
+    <Grid>
+         <Grid.RowDefinitions>
+             <RowDefinition Height="100"/>
+             <RowDefinition Height="*"/>
+         </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource BrushPrimary}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <CustomMenu:MenuButton Grid.Column="0" Margin="0,0,0,0" Padding="5,0,0,0" 
+                                   Text="Courses" GroupName="Nav"
+                                   VerticalAlignment="Bottom"
+                                Command ="{Binding UpdateCurrentViewModelCommand}"
+                                CommandParameter="{x:Static nav:CViewType.Courses}"
+                                IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:CoursesViewModel}}"
+                                   />
+            <CustomMenu:MenuButton Grid.Column="1" Margin="0,0,0,0" Padding="5,0,0,0" 
+                                   Text="Add Course" GroupName="Nav"
+                                   VerticalAlignment="Bottom"
+                                Command ="{Binding UpdateCurrentViewModelCommand}"
+                                CommandParameter="{x:Static nav:CViewType.AddCourse}"
+                                IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:AddCourseViewModel}}"
+                                   />
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Padding="10"
+                      >
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </ScrollViewer>
+        
+    </Grid>
+</UserControl>

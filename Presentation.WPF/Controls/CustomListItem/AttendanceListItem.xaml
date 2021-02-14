@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="Presentation.WPF.Controls.CustomListItem.AttendanceListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.WPF.Controls.CustomListItem"
+             xmlns:vm="clr-namespace:Presentation.UsersV.ViewModels.DesignTime"
+             xmlns:converters="clr-namespace:Presentation.WPF.Converters"
+             xmlns:customButton="clr-namespace:Presentation.WPF.Controls.CustomMenu"
+             mc:Ignorable="d" 
+             d:DesignHeight="90" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:BooleanToVisiblityConverter x:Key="BooleanToVisiblityConverter"/>
+        <converters:StringRGBToBrushConverter x:Key="StringRGBToBrushConverter"/>
+
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                        <!-- Content -->
+                        <Border x:Name="background" Background="WhiteSmoke">
+
+                            <!-- Click to open message -->
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" />
+                            </Border.InputBindings>
+
+                            <Grid x:Name="container" Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <!-- New Message Indicator Bar -->
+                                    <!-- Profile picture -->
+                                    <ColumnDefinition Width="Auto" />
+                                    <!-- Main content -->
+                                    <ColumnDefinition Width="*" />
+
+                                    <!-- Student Info -->
+                                    <ColumnDefinition Width="Auto" />
+
+                                </Grid.ColumnDefinitions>
+
+                                <!-- New Message Indicator Bar -->
+                                <Border Background="Red" 
+                                    Width="4"
+                                    HorizontalAlignment="Left"
+                                    Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisiblityConverter}, ConverterParameter=True}"
+                                    />
+
+                                <!-- Profile picture padding -->
+                                <Border Grid.Column="0" 
+                                    Padding="8 15"
+                                    >
+                                    <!-- Profile picture background -->
+                                    <Border Background="{Binding  ProfilePictureRGB, Converter={StaticResource StringRGBToBrushConverter}}"
+                                        Height="40"
+                                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                                        <!-- Profile picture initials -->
+                                        <TextBlock Text="{Binding Initials}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{StaticResource ForegroundLightBrush}"
+                                               FontSize="{StaticResource FontSizeLarge}"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               />
+                                    </Border>
+                                </Border>
+
+                                <!-- Main content -->
+                                <Border Grid.Column="1" Padding="0 0 15 0">
+                                    <StackPanel VerticalAlignment="Center">
+                                        <!-- Name-->
+                                        <TextBlock Text="{Binding Name}"
+                                                Padding="0 0 0 2"
+                                                Foreground="{StaticResource WordBlueBrush}"
+                                                TextTrimming="CharacterEllipsis"
+                                                FontFamily="{StaticResource LatoRegular}"
+                                                />
+                                        <!-- Message -->
+                                        <TextBlock Text="{Binding Matric}"
+                                               Padding="0 2 0 0"
+                                               Foreground="{StaticResource ForegroundDarkBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               />
+                                        <TextBlock Text="{Binding CourseName}"
+                                               Padding="0 2 0 0"
+                                               Foreground="{StaticResource ForegroundDarkBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               />
+                                        <TextBlock Text="{Binding LastTakenAt}"
+                                               Padding="0 2 0 0"
+                                               Foreground="{StaticResource ForegroundDarkBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               />
+
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="2" Padding="10">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <customButton:CustomRadioButton Grid.Column="0" Text="Absent" GroupName="{Binding Matric}"
+                                                                        IsSelected="{Binding IsAbsent}"
+                                                                        />
+                                        <customButton:CustomRadioButton Grid.Column="1" Text="Present" GroupName="{Binding Matric}"
+                                                                        IsSelected="{Binding IsPresent}"
+                                                                        />
+                                        <customButton:CustomRadioButton Grid.Column="2" Text="Excause" GroupName="{Binding Matric}" 
+                                                                        IsSelected="{Binding IsExcuase}"
+                                                                        />
+                                        <customButton:CustomRadioButton Grid.Column="3" Text="UnDetected" GroupName="{Binding Matric}" 
+                                                                        IsSelected="{Binding NotTaken}"
+                                                                        />
+                                    </Grid>
+                                </Border>
+
+                            </Grid>
+                        </Border>
+
+                        <!-- Hover effect -->
+                        <ControlTemplate.Triggers>
+
+                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Background" TargetName="background" Value="{StaticResource WordVeryVeryLightBlueBrush}"/>
+                            </DataTrigger>
+
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="{StaticResource WordVeryVeryLightBlue}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="Transparent" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="container" Value="{StaticResource ForegroundDarkBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ContentControl d:DataContext="{x:Static vm:AttendanceListItemDesignViewModel.Instance}"
+                    Style="{StaticResource ContentStyle}" />
+</UserControl>

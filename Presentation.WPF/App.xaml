@@ -1,0 +1,102 @@
+﻿<Application x:Class="Presentation.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Presentation.WPF"
+             xmlns:viewmodels="clr-namespace:Presentation.WPF.ViewModels.Common"
+             xmlns:views="clr-namespace:Presentation.WPF.Views.Common"
+             
+             xmlns:viewmodelsAdmin="clr-namespace:Presentation.Admin.ViewModels"
+
+             xmlns:adminViews="clr-namespace:Presentation.Admin.Views"
+
+             xmlns:viewmodelsUser="clr-namespace:Presentation.UsersV.ViewModels"
+             xmlns:userViews="clr-namespace:Presentation.UsersV.Views"
+             >
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Styles/Common.xaml" />
+                <ResourceDictionary Source="/Views/Styles/Colors.xaml" />
+                <ResourceDictionary Source="/Views/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="/Views/Styles/NavigationSidePanel.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:AdminDashViewModel}">
+                <adminViews:AdminHome />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:MLecturerViewModel}">
+                <adminViews:ManageLecturer />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:LecturersViewModel}">
+                <adminViews:LecturersView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:AddLectuerViewModel}">
+                <adminViews:AddLecturerView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:MCourseViewModel}">
+                <adminViews:ManageCourse />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:AddCourseViewModel}">
+                <adminViews:AddCourseView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:CoursesViewModel}">
+                <adminViews:CoursesView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:MAttendanceViewModel}">
+                <adminViews:ManageAttendance/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:StudentsViewModel}">
+                <adminViews:StudentsView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:AddStudentViewModel}">
+                <adminViews:AddStudentView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:AddFaceViewModel}">
+                <adminViews:AddFaceView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodelsAdmin:ModifyAttendanceViewModel}">
+                <adminViews:ModifyAttendanceView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsUser:UserDashboardViewModel}">
+                <userViews:UserHome />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsUser:TakeAttendanceViewModel}">
+                <userViews:TakeAttendance/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewmodelsUser:ViewAttendanceViewModel}">
+                <userViews:ViewAttendance/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewmodelsUser:RoomStatusViewModel}">
+                <userViews:RoomStatus/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:ProfileViewModel}">
+                <views:ManageProfile/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
+                <views:Login/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:RegisterViewModel}">
+                <views:Register/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:LogoutViewModel}">
+                <views:Logout />
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+    
+</Application>

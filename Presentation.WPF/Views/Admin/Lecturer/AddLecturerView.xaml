@@ -1,0 +1,200 @@
+﻿<UserControl x:Class="Presentation.Admin.Views.AddLecturerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.Admin.Views"
+             xmlns:vm="clr-namespace:Presentation.Admin.ViewModels.DesignTime" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0">
+            <Grid Grid.IsSharedSizeScope="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                HorizontalAlignment="Center"
+                FontSize="48"
+                Text="Add Lecturer" />
+
+                <TextBlock Grid.Row="1" Margin="0,10"
+                HorizontalAlignment="Center"
+                FontSize="18"
+                FontWeight="Thin"
+                Text="Please fillup the form to add a new Lecturer" />
+
+                <Grid Grid.Row="2" Margin="0,20" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Name"
+                                   Padding="6"
+                                   />
+                        <TextBox Grid.Column="1" Margin="20,0,0,0"
+                                 Padding="6"
+                                 Text="{Binding Name}"
+                         />
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Email"
+                                   Padding="6"
+                                   />
+                        <TextBox Grid.Column="1" Margin="20,0,0,0"
+                                 Text="{Binding Email}"
+                                 Padding="6"
+                         />
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Password"
+                                   Padding="6"
+                                   />
+                        
+                        <TextBox Grid.Column="1" Margin="20,0,0,0"
+                                 Text="{Binding Password}"
+                                 Padding="6"
+                         />
+                    </Grid>
+                    <Grid Grid.Row="3" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Phone"
+                                   Padding="6"
+                                   />
+                        <TextBox Grid.Column="1" Margin="20,0,0,0"
+                                 Padding="6"
+                                 Text="{Binding Phone}"
+                         />
+                    </Grid>
+                    <Grid Grid.Row="4" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Faculty"
+                                   Padding="6"
+                                   />
+                        <TextBox Grid.Column="1" Margin="20,0,0,0"
+                                 Padding="6"
+                                 Text="{Binding Faculty}"
+                         />
+                    </Grid>
+                    <Grid Grid.Row="5"  Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Course" Padding="6"/>
+                        <!--{Binding Email, UpdateSourceTrigger=PropertyChanged}-->
+                        <ComboBox Grid.Column="1" 
+                                  Margin="20,0,0,0" 
+                                  Padding="6"
+                                  ItemsSource="{Binding CourseListItems}"
+                                  SelectedIndex="0"
+                                  SelectedItem="{Binding SelectedCourseItem}"
+                                  >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding CourseCode}"/>
+                                        <TextBlock Text=" - "/>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="2" Command="{Binding AddCourse}" 
+                                CommandParameter="{Binding SelectedCourseItem}"  
+                                Content="Add" Margin="10, 0, 0, 0" 
+                                Padding="10,0,10,0"/>
+                    </Grid>
+
+                    <Button Grid.Row="6" Margin="0,10"
+                            HorizontalAlignment="Right"
+                            Command="{Binding AddLectuer}"
+                            Content="Add Lecturer"
+                            IsDefault="True" 
+                            Padding="10"
+                            Width="200"
+                            />
+                </Grid>
+            </Grid>
+        </Border>
+        <Border Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0">
+                    <TextBlock Text="Courses" 
+                               FontSize="35" 
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               />
+                </Border>
+                <StackPanel Grid.Row="1" Orientation="Vertical" 
+                             
+                            >
+                    <ScrollViewer 
+                        VerticalScrollBarVisibility="Auto" 
+                        HorizontalScrollBarVisibility="Hidden">
+                        <ListView 
+                            ItemsSource="{Binding SelectedOfferedCourseItem}"
+                            SelectedItem="{Binding SelectdOfferedCourseListItemViewModel}"
+                            SelectionMode="Single"
+                            >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" Padding="5,5,0,0" FontSize="14"/>
+                                        <TextBlock Text="{Binding CourseCode}" Padding="5,0,0,5" FontSize="10"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                    <Button Content="Delete" Command="{Binding ItemSelected}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+    
+</UserControl>

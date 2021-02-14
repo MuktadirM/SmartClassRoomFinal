@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="Presentation.Admin.Views.AddFaceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.Admin.Views"
+             xmlns:vm="clr-namespace:Presentation.Admin.ViewModels.DesignTime"
+             xmlns:customList="clr-namespace:Presentation.WPF.Controls.CustomListItem"
+             xmlns:converters="clr-namespace:Presentation.WPF.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:PathToImageConverter x:Key="PathToImageConverter"/>
+    </UserControl.Resources>
+    
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <!-- Face Section -->
+            <ColumnDefinition Width="3*"/>
+            <!--Training Section-->
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" 
+              Background="{StaticResource ForegroundLightBrush}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView ItemsSource="{Binding NoFaceFound}"
+                          SelectedItem="{Binding SelectedStudent}"
+                          
+                          HorizontalContentAlignment="Stretch"
+                          BorderThickness="0"
+                          Padding="0"
+                          Margin="0"
+                    >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="WhiteSmoke">
+                            <customList:StudentListItem/>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <!--Selected Student Details-->
+                <RowDefinition Height="2*"/>
+                <!--Selected Student Details-->
+                <RowDefinition Height="3*"/>
+                <!--Selected Traning-->
+                <RowDefinition Height="2*"/>
+                
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+                <Border Background="Aquamarine" 
+                        Height="70"
+                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                        Margin="0,10,0,0"
+                                               >
+                    <TextBlock Text="{Binding SelectedStudent.Initials}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ForegroundLightBrush}"
+                               FontSize="{StaticResource FontSizeXXLarge}"
+                               FontFamily="{StaticResource LatoRegular}"
+                               />
+                </Border>
+
+                <TextBlock Text="{Binding SelectedStudent.Name}"
+                           Margin="0,10,0,0"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           FontFamily="{StaticResource LatoRegular}"
+                           HorizontalAlignment="Center"
+                           />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Border Grid.Row="1" BorderBrush="{StaticResource BackgroundLightBrush}" BorderThickness="2">
+                    <StackPanel Orientation="Vertical"
+                        >
+                        <TextBlock Text="{Binding SelectImageFor}"
+                           Margin="0,10,0,0"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           FontFamily="{StaticResource LatoRegular}"
+                           HorizontalAlignment="Center"/>
+                        <TextBlock Text="You can chose max 4 image and min 1"
+                           Margin="0,10,0,0"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           FontFamily="{StaticResource LatoRegular}"
+                           HorizontalAlignment="Center"/>
+
+                        <ListView ItemsSource="{Binding FilesPath}"
+                                  BorderThickness="0"
+                                  >
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
+                                        RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                        ItemWidth="{Binding (ListView.View).ItemWidth, 
+                                        RelativeSource={RelativeSource AncestorType=ListView}}"
+                                       
+                                        ItemHeight="{Binding (ListView.View).ItemHeight, 
+                                        RelativeSource={RelativeSource AncestorType=ListView}}" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <Image Height="70" Width="70"
+                                               Source="{Binding FilePath,Converter={StaticResource PathToImageConverter}}"
+                                               />
+                                        <TextBlock Text="{Binding FileName}" HorizontalAlignment="Center" Padding="4"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </StackPanel>
+                </Border>
+                <Button VerticalAlignment="Bottom" Content="Add Images" Height="40"
+                        Command="{Binding ItemSelected}"
+                        />
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Train"  Command="{Binding StartTraning}"/>
+                <Grid Grid.Column="1">
+                    <Border  
+                        BorderBrush="Green" 
+                        BorderThickness="7"
+                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                        Height="90"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                             >
+                        <TextBlock Text="{Binding TraningStatus}"
+                           Margin="0,0,0,0"
+                           FontSize="{StaticResource FontSizeRegular}"
+                           FontFamily="{StaticResource LatoRegular}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                                   />
+                    </Border>
+                </Grid>
+            </Grid>
+
+        </Grid>
+        
+        
+    </Grid>
+</UserControl>

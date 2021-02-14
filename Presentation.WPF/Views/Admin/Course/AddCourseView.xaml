@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="Presentation.Admin.Views.AddCourseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.Admin.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0">
+            <Grid Grid.IsSharedSizeScope="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                HorizontalAlignment="Center"
+                FontSize="48"
+                Text="Add Course" />
+
+                <TextBlock Grid.Row="1" Margin="0,10"
+                HorizontalAlignment="Center"
+                FontSize="18"
+                FontWeight="Thin"
+                Text="Please fillup the form to add a new course" />
+
+                <Grid Grid.Row="2" Margin="0,20" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Course Name"
+                                   Padding="6"
+                                   />
+                        <TextBox Text="{Binding CourseName, Mode=TwoWay}" Grid.Column="1" Margin="20,0,0,0"
+                                 Padding="6"
+                         />
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Course Code"
+                                   Padding="6"
+                                   />
+                        <TextBox Text="{Binding CourseCode}" Grid.Column="1" Margin="20,0,0,0"
+                                 Padding="6"
+                         />
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Semester"
+                                   Padding="6"
+                                   />
+                        <TextBox Text="{Binding Semester}" Grid.Column="1" Margin="20,0,0,0"
+                                 Padding="6"
+                         />
+                    </Grid>
+                    <Grid Grid.Row="3" Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Faculty"
+                                   Padding="6"
+                                   />
+                        <TextBox Text="{Binding Faculty}" Grid.Column="1" Margin="20,0,0,0"
+                                 Padding="6"
+                         />
+                    </Grid>
+
+                    <Button Grid.Row="4" Margin="0,10"
+                            HorizontalAlignment="Right"
+                            Command="{Binding AddCourse}"
+                            Content="Add"
+                            IsDefault="True" 
+                            Padding="10"
+                            Width="200"
+                            />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
