@@ -104,7 +104,8 @@ namespace Presentation.WPF
                     });
                     services.AddSingleton<CreateViewModel<AddLectuerViewModel>>(services =>
                     {
-                        return () => services.GetRequiredService<AddLectuerViewModel>();
+                        return () => new AddLectuerViewModel(services.GetRequiredService<ICourseServices>(), 
+                            services.GetRequiredService<ILecturerService>());
                     });
 
                     services.AddSingleton<CreateViewModel<UserDashboardViewModel>>(services =>
@@ -174,7 +175,8 @@ namespace Presentation.WPF
 
                     services.AddSingleton<CreateViewModel<AddStudentViewModel>>(services =>
                     {
-                        return () => services.GetRequiredService<AddStudentViewModel>();
+                        return () => new AddStudentViewModel(services.GetRequiredService<ICourseServices>(), 
+                            services.GetRequiredService<IRegistrationService>());
                     });
 
                     services.AddSingleton<CreateViewModel<AddFaceViewModel>>(services =>

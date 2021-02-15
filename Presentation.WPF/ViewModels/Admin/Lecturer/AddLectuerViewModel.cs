@@ -136,18 +136,31 @@ namespace Presentation.Admin.ViewModels
             _lecturserService.CreateLecturer(lecturer, list).ContinueWith(task=> {
                 if (task.Result == LecturerRegistrationResult.Success)
                 {
-                    MessageBox.Show("Lecturer Added", "Success");
+                    Name = "";
+                    Password = "";
+                    Email = "";
+                    Phone = "";
+                    Faculty = "";
+
+                    MessageBox.Show("Lecturer Added", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    OnPropertyChanged(nameof(Name));
+                    OnPropertyChanged(nameof(Password));
+                    OnPropertyChanged(nameof(Email));
+                    OnPropertyChanged(nameof(Phone));
+                    OnPropertyChanged(nameof(Faculty));
+
                 }
                 else if (task.Result == LecturerRegistrationResult.EmailAlreadyExists)
                 {
-                    MessageBox.Show("Lecturer Email Already Exsist", "Success");
+                    MessageBox.Show("Lecturer Email Already Exsist", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else if (task.Result == LecturerRegistrationResult.ZeroCourseFound)
                 {
-                    MessageBox.Show("Lecturer Does not have any course", "Success");
+                    MessageBox.Show("Lecturer Does not have any course", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else {
-                    MessageBox.Show("Unknown Error", "Success");
+                    MessageBox.Show("Unknown Error", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
             

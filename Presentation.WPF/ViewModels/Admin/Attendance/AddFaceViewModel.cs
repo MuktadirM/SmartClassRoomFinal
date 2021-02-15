@@ -126,7 +126,7 @@ namespace Presentation.Admin.ViewModels
 
         private async void Traning() {
             if (FilesPath.Count < 1 || SelectedStudent == null) {
-                MessageBox.Show("Sorry Image and student should be select","Error");
+                MessageBox.Show("Sorry Image and student should be select", "Action Unsuccessfull", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -168,8 +168,7 @@ namespace Presentation.Admin.ViewModels
                     TraningStatus = "Completed";
                     OnPropertyChanged(nameof(TraningStatus));
                 }
-
-                MessageBox.Show("Student face added", "Success");
+                MessageBox.Show("Student face added", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Information);
                 FilesPath.Clear();
                 InitStudent();
             }

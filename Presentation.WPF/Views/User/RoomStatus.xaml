@@ -37,7 +37,7 @@
                                     <StackPanel Grid.Column="0" Orientation="Vertical" Width="500">
                                         <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Room Booked By : " VerticalAlignment="Center"/>
+                                            <TextBlock Text="Occopied By : " VerticalAlignment="Center"/>
                                             <TextBlock Text="{Binding RoomBookedBy}" VerticalAlignment="Center"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">

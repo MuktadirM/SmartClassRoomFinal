@@ -54,10 +54,18 @@ namespace Presentation.Admin.ViewModels
                 IsActive = true,
             };
             if (_services.Create(course) != null) {
-                MessageBox.Show("Course Added ", "Successfull");
+                CourseCode = "";
+                CourseName = "";
+                Faculty = "";
+                Semester = "";
+                MessageBox.Show("Course Successfully Added ", "Action Successfull",MessageBoxButton.OK,MessageBoxImage.Information);
+                OnPropertyChanged(nameof(CourseCode));
+                OnPropertyChanged(nameof(CourseName));
+                OnPropertyChanged(nameof(Faculty));
+                OnPropertyChanged(nameof(Semester));
             }
             else
-                MessageBox.Show("Course Fail to add ", "Successfull");
+                MessageBox.Show("Course Fail to add ", "Unsuccessfull", MessageBoxButton.OK, MessageBoxImage.Error);
 
 
         }

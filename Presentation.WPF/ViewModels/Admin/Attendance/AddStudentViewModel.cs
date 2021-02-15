@@ -110,7 +110,21 @@ namespace Presentation.Admin.ViewModels
             _registrationService.RegisterStudent(student,list).ContinueWith(task=> {
                 if (task.Exception == null)
                 {
-                    MessageBox.Show("Student Added", "Success");
+                    Name = "";
+                    Email = "";
+                    Faculty = "";
+                    Semester = "";
+                    Matric = 0;
+                    Phone = "";
+
+                    MessageBox.Show("Student Successfully Added", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    OnPropertyChanged(nameof(Name));
+                    OnPropertyChanged(nameof(Email));
+                    OnPropertyChanged(nameof(Faculty));
+                    OnPropertyChanged(nameof(Semester));
+                    OnPropertyChanged(nameof(Matric));
+                    OnPropertyChanged(nameof(Phone));
                 }
             });
         }
@@ -130,7 +144,7 @@ namespace Presentation.Admin.ViewModels
                 LecturerName = item.LecturerName,
             };
             if (SelectedOfferedCourseItem.Count>0 && SelectedOfferedCourseItem.Any(it=>it.CourseName == item2.CourseName)) {
-                MessageBox.Show("Course Already in List","Duplicate Found");
+                MessageBox.Show("Course Already in List", "Duplicate Found", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
             else
             {

@@ -27,13 +27,13 @@ namespace Presentation.WPF.ViewModels
             switch (room)
             {
                 case RoomStatusType.Booked:
-                    status = "Room Booked";
+                    status = "Engage";
                     break;
                 case RoomStatusType.Free:
-                    status = "Room Free";
+                    status = "Vacant";
                     break;
                 case RoomStatusType.Maintenance:
-                    status = "Room Under Maintenance";
+                    status = "Maintenance";
                     break;
             }
 
