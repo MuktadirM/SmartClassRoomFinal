@@ -3,6 +3,7 @@ using Presentation.ViewModels;
 using SmartClassRoom.Domain.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace Presentation.Admin.ViewModels
@@ -33,8 +34,9 @@ namespace Presentation.Admin.ViewModels
                     Faculty = lecturer.Faculty,
                     Initials = GetInitials(lecturer.User.Name),
                     ProfilePictureRGB = RandomRGBColor(),
+                    CourseCount = lecturer.Sections.Count(),
                     JoinDate = lecturer.User.CreatedAt,
-                });
+                }); ;
             }
             
         }

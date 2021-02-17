@@ -65,24 +65,23 @@ namespace DataAccessLayer.Services
 
         public async Task<IEnumerable<Course>> GetAll()
         {
-            using (DatabaseContext context = _contextFactory.CreateDbContext())
-            {
-                IEnumerable<Course> entities = await context.Courses.ToListAsync();
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            IEnumerable<Course> entities = await context.Courses
+                .Include(c=>c.Sections)
+                .ToListAsync();
 
-                return entities;
-            }
+            return entities;
         }
 
         public async Task<IEnumerable<Section>> GetAllSections()
         {
-            using (DatabaseContext context = _contextFactory.CreateDbContext()) {
-                IEnumerable<Section> sections = await context.Sections
-                    .Include(s => s.Course)
-                    .Include(s => s.Lecturer.User)
-                    .Include(s=>s.AttendProcess)
-                    .ToListAsync();
-                return sections;
-            }
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            IEnumerable<Section> sections = await context.Sections
+                .Include(s => s.Course)
+                .Include(s => s.Lecturer.User)
+                .Include(s => s.AttendProcess)
+                .ToListAsync();
+            return sections;
         }
 
         public async Task<IEnumerable<Registration>> GetCourseStudentsBySection(Section section)

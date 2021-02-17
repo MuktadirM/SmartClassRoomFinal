@@ -1,7 +1,9 @@
 ﻿using Presentation.ViewModels;
 using Presentation.WPF.State.Authenticators;
+using SmartClassRoom.Domain.Models.Core;
 using SmartClassRoom.Domain.Models.Core.Statistics;
 using SmartClassRoom.Domain.Services;
+using System.Collections.ObjectModel;
 
 namespace Presentation.UsersV.ViewModels
 {
@@ -11,6 +13,8 @@ namespace Presentation.UsersV.ViewModels
         private readonly IAuthenticator _authenticator;
 
         public LecturerStatisticsData LecturerStatisticsData { get; set; }
+
+        public ObservableCollection<Course> Items { get; set; } = new ObservableCollection<Course>();
 
         public UserDashboardViewModel(IStatisticsDataServices statisticsDataServices, IAuthenticator authenticator)
         {
@@ -26,7 +30,10 @@ namespace Presentation.UsersV.ViewModels
             OnPropertyChanged(nameof(LecturerStatisticsData));
 
            var courses = await _statisticsDataServices.LecturerCourses(_authenticator.CurrentAccount.User.Id);
-
+            Items.Clear();
+            foreach (var course in courses) {
+                Items.Add(course);
+            }
         }
 
 

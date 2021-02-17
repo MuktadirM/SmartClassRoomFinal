@@ -83,6 +83,7 @@ namespace DataAccessLayer.Services
         {
             using (DatabaseContext context = _contextFactory.CreateDbContext()) {
                 IEnumerable<Lecturer> entities = await context.Lecturers
+                    .Include(l=>l.Sections)
                     .Include(a=>a.User)
                     .ToListAsync();
 

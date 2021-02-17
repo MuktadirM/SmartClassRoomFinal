@@ -4,6 +4,7 @@ using SmartClassRoom.Domain.Services.CourseServices;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Presentation.Admin.ViewModels
@@ -39,7 +40,7 @@ namespace Presentation.Admin.ViewModels
                             Faculty = course.Faculty,
                             CoursePictureRGB = RandomRGBColor(),
                             JoinDate = course.CreatedAt ?? DateTime.MinValue,
-                            StudentCount = 100,
+                            StudentCount = course.Sections.Count(),
                             IsSelected = false,
                         }
                     );

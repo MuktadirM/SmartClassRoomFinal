@@ -173,9 +173,43 @@
                     </Grid>
                     <Grid Grid.Row="1" Grid.IsSharedSizeScope="True">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ListItem>
-                                
-                            </ListItem>
+                            <ItemsControl ItemsSource="{Binding Items}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="AntiqueWhite" CornerRadius="10" Margin="10">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border  Grid.Column="0" Background="{StaticResource BackgroundVeryLightBrush}" Padding="10" CornerRadius="10,0,10,0">
+                                                    <Grid Margin="4,0,0,0">
+                                                        <Path  Data="{StaticResource book}" Fill="GreenYellow" Stretch="Fill" Width="40"/>
+                                                    </Grid>
+                                                </Border>
+                                                <Grid Grid.Column="1" Margin="3">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="{Binding CourseName}" FontSize="20" HorizontalAlignment="Center"/>
+                                                    <TextBlock Grid.Row="1" Text="{Binding CourseCode}" FontSize="14" HorizontalAlignment="Center"/>
+                                                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <TextBlock Text="Semester : " />
+                                                        <TextBlock Text="{Binding Sem}" />
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <TextBlock Text="Offered By : " />
+                                                        <TextBlock Text="{Binding Faculty}" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </ScrollViewer>
                     </Grid>
                 </Grid>

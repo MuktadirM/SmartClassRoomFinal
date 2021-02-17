@@ -99,7 +99,7 @@
                                             <RowDefinition Height="auto"/>
                                         </Grid.RowDefinitions>
                                         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="2">
-                                            <TextBlock Text="Student Count : " 
+                                            <TextBlock Text="Lecturer Count : " 
                                                Foreground="{StaticResource ForegroundDarkBrush}"
                                                TextTrimming="CharacterEllipsis"
                                                FontFamily="{StaticResource LatoRegular}"
