@@ -1,61 +1,47 @@
 ﻿using Presentation.ViewModels;
 using Presentation.WPF.ViewModels;
 using SmartClassRoom.Domain.Models.Core;
-using System;
-using System.Collections.Generic;
+using SmartClassRoom.Domain.Services;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Presentation.UsersV.ViewModels
 {
     public class RoomStatusViewModel : BaseViewModel
     {
-        public ObservableCollection<RoomStatusListItem> ListOfRoomInfo { get; set; }
+        private readonly IRoomServices _roomServices;
 
-        public RoomStatusViewModel() {
+        public ObservableCollection<RoomStatusListItem> ListOfRoomInfo { get; set; } = new ObservableCollection<RoomStatusListItem>();
 
-            ListOfRoomInfo = new ObservableCollection<RoomStatusListItem>(){
-                new RoomStatusListItem {
-                    Id=1,
-                    Name = "BK1",
-                    RoomBookedBy = "Dr. Haslinda",
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Today,
-                    RoomStatusType = RoomStatusType.Booked,
-                },
-                new RoomStatusListItem {
-                    Id=2,
-                    Name = "BK2",
-                    RoomBookedBy = "None",
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Today,
-                    RoomStatusType = RoomStatusType.Free,
-                },
-                new RoomStatusListItem {
-                    Id=3,
-                    Name = "BK4",
-                    RoomBookedBy = "Dr. Hema",
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Today,
-                    RoomStatusType = RoomStatusType.Booked,
-                },
-                new RoomStatusListItem {
-                    Id=4,
-                    Name = "BK9",
-                    RoomBookedBy = "None",
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Today,
-                    RoomStatusType = RoomStatusType.Free,
-                },
-                new RoomStatusListItem {
-                    Id=5,
-                    Name = "BK7",
-                    RoomBookedBy = "None",
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Today,
-                    RoomStatusType = RoomStatusType.Maintenance,
-                },
+        public RoomStatusViewModel(IRoomServices roomServices) {
+            _roomServices = roomServices;
+
+            LoadRoom();
+        }
+
+        private async void LoadRoom() {
+            ListOfRoomInfo.Clear();
+
+            var statuses = await _roomServices.GetAll();
+            foreach (var status in statuses) {
+                ListOfRoomInfo.Add(new RoomStatusListItem { 
+                    Name = status.Name,
+                    RoomBookedBy = status.RoomBookedBy,
+                    RoomStatusType = status.RoomStatusType,
+                    StartTime = status.StartTime,
+                    EndTime = status.EndTime,
+                });
+            }
+
+        }
+
+        public string RoomE(RoomStatusType roomStatus) {
+            return roomStatus switch
+            {
+                RoomStatusType.Booked => "Engage",
+                RoomStatusType.Free => "Vacant",
+                RoomStatusType.Maintenance => "Maintenance",
+                _ => "Unknown",
             };
         }
     }

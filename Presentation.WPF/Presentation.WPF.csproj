@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ClassRoomDataAPI\ClassRoomDataAPI.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\FaceProcessing\FaceProcessing.csproj" />
     <ProjectReference Include="..\SmartClassRoom.Domain\SmartClassRoom.Domain.csproj" />

@@ -6,6 +6,7 @@ using SmartClassRoom.Domain.Services.CourseServices;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace DataAccessLayer.Services
 {
@@ -65,21 +66,37 @@ namespace DataAccessLayer.Services
             return stastics;
         }
 
+        public async Task<IEnumerable<Course>> LecturerCourses(int id)
+        {
+            var lecturer = await _lecturerServices.GetOne(id);
+            var courses = await _courseServices.CourseByLectuerer(lecturer.Id);
+            return courses;
+        }
+
         public async Task<LecturerStatisticsData> LecturerStatisticsData(int id)
         {
+            int presentCount = 0;
             var lecturerStatisticsData = new LecturerStatisticsData();
             var lecturer = await _lecturerServices.GetOne(id);
             var registrations = await _registrationService.RegistrationsByLecturer(lecturer.Id);
             var courses = await _courseServices.CourseByLectuerer(lecturer.Id);
 
             lecturerStatisticsData.Courses = courses.Count();
-
+            
             foreach (var registration in registrations) {
+                var attends = registration.Section.AttendProcess.Attendances;
+                lecturerStatisticsData.Attendances = attends.Count();
+                presentCount += attends.Count(at=>at.AttendanceType == 1);
                 lecturerStatisticsData.Students += 1;
+                lecturerStatisticsData.LastUpdate = registration.Section.AttendProcess.LastUpdated;
             }
+            lecturerStatisticsData.Courses = courses.Count();
+            lecturerStatisticsData.AttendancePercent = (100 * presentCount) / lecturerStatisticsData.Attendances;
 
             return lecturerStatisticsData;
             
         }
+
+
     }
 }

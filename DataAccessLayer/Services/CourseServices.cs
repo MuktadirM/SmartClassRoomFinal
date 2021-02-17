@@ -136,15 +136,18 @@ namespace DataAccessLayer.Services
         public async Task<IEnumerable<Course>> CourseByLectuerer(int id)
         {
             using DatabaseContext context = _contextFactory.CreateDbContext();
-            IEnumerable<Course> courses = await context.Courses
-                .Include(c=>c.Sections)
+            IEnumerable<Section> sections = await context.Sections
+                .Where(s=>s.LecturerId == id)
+                .Include(s=>s.Course)
                 .ToListAsync();
-
-            List<Course> filtered = new List<Course>();
-            foreach (var course in courses) {
-                filtered.Add((Course)course.Sections.Where(se=>se.LecturerId==id));
+            List<Course> courses = new List<Course>();
+            foreach (var section in sections) {
+                var exist = courses.Find(c=>c.Id == section.CourseId);
+                if (exist == null) {
+                    courses.Add(section.Course);
+                }
             }
-            return filtered;
+            return courses;
         }
 
 

@@ -6,6 +6,7 @@ using SmartClassRoom.Domain.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace DataAccessLayer.Services
 {
@@ -80,9 +81,17 @@ namespace DataAccessLayer.Services
 
         }
 
-        public Task<IEnumerable<Registration>> RegistrationsByLecturer(int id)
+        public async Task<IEnumerable<Registration>> RegistrationsByLecturer(int id)
         {
-            throw new NotImplementedException();
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            IEnumerable<Registration> registrations = await context.Registrations
+                .Include(r=>r.Section)
+                .Include(r=>r.Section.Course)
+                .Include(r=>r.Section.AttendProcess)
+                .Include(r=>r.Section.AttendProcess.Attendances)
+                .ToListAsync();
+
+                return registrations.Where(r=>r.Section.LecturerId == id);
         }
 
         public Task RemoveStudent(Student student)

@@ -9,15 +9,15 @@ namespace SmartClassRoom.Domain.Models.Core
     /// </summary>
     public class StatisticsData
     {
-        public int Users { get; set; }
-        public int Courses { get; set; }
-        public int Lecturers { get; set; }
-        public int Students { get; set; }
-        public int StudentFaceAdded { get; set; }
-        public int Registrations { get; set; }
-        public int Sections { get; set; }
-        public int Attendances { get; set; }
-        public int AttendancePercent { get; set; }
-        public DateTime LastUpdate { get; set; }
+        public int Users { get; set; } = 0;
+        public int Courses { get; set; } = 0;
+        public int Lecturers { get; set; } = 0;
+        public int Students { get; set; } = 0;
+        public int StudentFaceAdded { get; set; } = 0;
+        public int Registrations { get; set; } = 0;
+        public int Sections { get; set; } = 0;
+        public int Attendances { get; set; } = 0;
+        public int AttendancePercent { get; set; } = 0;
+        public DateTime LastUpdate { get; set; } = DateTime.Now;
     }
 }

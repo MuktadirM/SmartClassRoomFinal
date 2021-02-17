@@ -92,7 +92,7 @@
                                   Margin="10,0,0,0"
                                   Data="{StaticResource book}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
                             <TextBlock Grid.Column="1" Text="Available Courses : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
-                            <TextBlock Grid.Column="2" Text="5 " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="{Binding LecturerStatisticsData.Courses}" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
                         </Grid>
 
                         <Grid Grid.Row="1" Background="AliceBlue">
@@ -105,7 +105,7 @@
                                   Margin="10,0,0,0"
                                   Data="{StaticResource people}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
                             <TextBlock Grid.Column="1" Text="Available Students : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
-                            <TextBlock Grid.Column="2" Text="50 " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="{Binding LecturerStatisticsData.Students}" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
                         </Grid>
 
                         <Grid Grid.Row="2" Background="AntiqueWhite">
@@ -118,7 +118,7 @@
                                   Margin="10,0,0,0"
                                   Data="{StaticResource account_clock}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
                             <TextBlock Grid.Column="1" Text="Attendance : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
-                            <TextBlock Grid.Column="2" Text="90%" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="{Binding LecturerStatisticsData.AttendancePercent}" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
                         </Grid>
 
                         <Grid Grid.Row="3" Background="AliceBlue">
@@ -131,7 +131,7 @@
                                   Margin="10,0,0,0"
                                   Data="{StaticResource account_clock}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
                             <TextBlock Grid.Column="1" Text="Attendance Taken : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
-                            <TextBlock Grid.Column="2" Text="300" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="{Binding LecturerStatisticsData.Attendances}" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
                         </Grid>
 
                         <Grid Grid.Row="4" Background="AntiqueWhite">
@@ -144,7 +144,7 @@
                                   Margin="10,0,0,0"
                                   Data="{StaticResource account_clock}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
                             <TextBlock Grid.Column="1" Text="Last updated : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
-                            <TextBlock Grid.Column="2" Text="2/16/2021 5:07:48 AM" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="{Binding LecturerStatisticsData.LastUpdate}" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
                         </Grid>
 
 

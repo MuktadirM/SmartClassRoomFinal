@@ -21,11 +21,15 @@ namespace Presentation.UsersV.ViewModels
 
         private async void LoadHomeData()
         {
-            //var data = await _statisticsDataServices.LecturerStatisticsData(_authenticator.CurrentAccount.User.Id);
-            //LecturerStatisticsData = data;
-            //OnPropertyChanged(nameof(LecturerStatisticsData));
+            var data = await _statisticsDataServices.LecturerStatisticsData(_authenticator.CurrentAccount.User.Id);
+            LecturerStatisticsData = data;
+            OnPropertyChanged(nameof(LecturerStatisticsData));
+
+           var courses = await _statisticsDataServices.LecturerCourses(_authenticator.CurrentAccount.User.Id);
 
         }
+
+
 
 
     }

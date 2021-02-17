@@ -1,6 +1,7 @@
 ﻿
 using SmartClassRoom.Domain.Models.Core;
 using SmartClassRoom.Domain.Models.Core.Statistics;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SmartClassRoom.Domain.Services
@@ -13,5 +14,6 @@ namespace SmartClassRoom.Domain.Services
     {
         public Task<StatisticsData> GetAll();
         public Task<LecturerStatisticsData> LecturerStatisticsData(int id);
+        public Task<IEnumerable<Course>> LecturerCourses(int id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using DataAccessLayer;
+﻿using ClassRoomDataAPI;
+using DataAccessLayer;
 using DataAccessLayer.Services;
 using FaceProcessing.Face;
 using Microsoft.AspNet.Identity;
@@ -67,6 +68,8 @@ namespace Presentation.WPF
 
                     services.AddSingleton<IAuthenticator, Authenticator>();
                     services.AddSingleton<IAccountStore, AccountStore>();
+                    services.AddSingleton<IRoomServices, RoomServices>();
+
 
                     services.AddSingleton<AdminDashViewModel>();
                     services.AddSingleton<UserDashboardViewModel>();
@@ -168,7 +171,7 @@ namespace Presentation.WPF
 
                     services.AddSingleton<CreateViewModel<RoomStatusViewModel>>(services =>
                     {
-                        return () => services.GetRequiredService<RoomStatusViewModel>();
+                        return () => new RoomStatusViewModel(services.GetRequiredService<IRoomServices>());
                     });
 
                     services.AddSingleton<CreateViewModel<LoginViewModel>>(services =>
