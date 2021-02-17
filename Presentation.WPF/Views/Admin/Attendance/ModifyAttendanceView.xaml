@@ -7,26 +7,108 @@
              xmlns:customList="clr-namespace:Presentation.WPF.Controls.CustomListItem"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="MenuButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <!--Column for Text-->
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextBlock.FontWeight="Bold"
+                                    TextBlock.Foreground="{StaticResource BrushPrimaryDark}"
+                                    />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!--Trigger to set our toggle button as checked on MainWindow Startup-->
+                            <Trigger Property="IsChecked"  Value="True">
+                                <Setter Property="Background" Value="{StaticResource BrushPrimary}"/>
+                            </Trigger>
+                            <!--Trigger to set our toggle button mouse over color -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource BrushPrimary}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </UserControl.Resources>
+    
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0" 
-              DataContext="{x:Static vm:AttendanceListDesignViewModel.Instance}" 
+              d:DataContext="{x:Static vm:AttendanceListDesignViewModel.Instance}" 
               Background="{StaticResource ForegroundLightBrush}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Items}">
-                    <ItemsControl.ItemTemplate>
+                <ListView 
+                    ItemsSource="{Binding Items}"
+                    SelectedItem="{Binding SelectedAttendance}"
+                    HorizontalContentAlignment="Stretch"
+                    BorderThickness="0"
+                    Padding="0"
+                    >
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="2">
-                                <customList:AttendanceListItem/>
+                            <Border Background="WhiteSmoke"
+                                    >
+                                <customList:UserAttendanceViewListItem/>
                             </Border>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListView.ItemTemplate>
+                </ListView>
             </ScrollViewer>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Padding="5" BorderThickness="1" BorderBrush="BlueViolet">
+                <TextBlock Text="{Binding AttendanceSelectedInfo}" FontSize="22"/>
+            </Border>
+            
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Select Type : " FontSize="18" VerticalAlignment="Center"/>
+                    <RadioButton GroupName="attendance" Width="70"
+                                 Command="{Binding AttendanceChanged}"
+                                 CommandParameter="Absent"
+                                 Content="Absent"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                    <RadioButton GroupName="attendance" Width="70"
+                                 Command="{Binding AttendanceChanged}"
+                                 CommandParameter="Present"
+                                 Content="Present"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                    <RadioButton GroupName="attendance" Width="70"
+                                 Command="{Binding AttendanceChanged}"
+                                 CommandParameter="Excause"
+                                 Content="Excuse"
+                                 Style="{StaticResource MenuButtonStyle}"/>
+                </StackPanel>
+                <Button Content="Submit" Command="{Binding ItemSelected}" Height="40" FontSize="22" />
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

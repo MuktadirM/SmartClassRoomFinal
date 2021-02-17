@@ -121,5 +121,32 @@ namespace DataAccessLayer.Services
         {
             return await _nonQueryDataService.Update(id,entity);
         }
+
+        public async Task<IEnumerable<Registration>> RegistrationsByLecturer(int id) {
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            IEnumerable<Registration> courseRegisterd = await context.Set<Registration>()
+                .Where(s => s.Section.LecturerId == id)
+                .Include(s => s.Student)
+                .Include(s => s.Section.AttendProcess)
+                .Include(s =>s.Section.AttendProcess.Attendances)
+                .ToListAsync();
+            return courseRegisterd;
+        }
+
+        public async Task<IEnumerable<Course>> CourseByLectuerer(int id)
+        {
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            IEnumerable<Course> courses = await context.Courses
+                .Include(c=>c.Sections)
+                .ToListAsync();
+
+            List<Course> filtered = new List<Course>();
+            foreach (var course in courses) {
+                filtered.Add((Course)course.Sections.Where(se=>se.LecturerId==id));
+            }
+            return filtered;
+        }
+
+
     }
 }

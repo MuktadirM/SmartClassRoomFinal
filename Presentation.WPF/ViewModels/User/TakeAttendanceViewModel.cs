@@ -3,8 +3,11 @@ using Presentation.Admin.ViewModels;
 using Presentation.ViewModels;
 using Presentation.WPF.Commands.Callbcks;
 using Presentation.WPF.Models;
+using Presentation.WPF.State.Authenticators;
+using Presentation.WPF.Views.Common;
 using SmartClassRoom.Domain.Models.AttendanceProcessing;
 using SmartClassRoom.Domain.Models.Core;
+using SmartClassRoom.Domain.Models.Users;
 using SmartClassRoom.Domain.Services;
 using SmartClassRoom.Domain.Services.CourseServices;
 using SmartClassRoom.Domain.Services.StudentServices;
@@ -19,10 +22,12 @@ namespace Presentation.UsersV.ViewModels
 {
     public class TakeAttendanceViewModel : BaseViewModel
     {
+       
         private readonly ICourseServices _courseServices;
         private readonly IStudentFaceService _studentFaceService;
+        private readonly ILecturerService _lecturerService;
+        private readonly IAuthenticator _authenticator;
         private readonly IAttendanceService _attendanceService;
-
 
         private AType aType { get; set; }
 
@@ -64,15 +69,20 @@ namespace Presentation.UsersV.ViewModels
         public ICommand LoadStudent { get; set; }
         public ICommand AttendanceChanged { get; set; }
         public ICommand ChangeAttendance { get; set; }
+        public ICommand OpenCamera { get; set; }
 
 
         public TakeAttendanceViewModel(ICourseServices courseServices, IStudentFaceService studentFaceService,
-            IAttendanceService attendanceService
+            IAttendanceService attendanceService,
+            IAuthenticator authenticator,
+            ILecturerService lecturerService
             )
         {
             _courseServices = courseServices;
             _studentFaceService = studentFaceService;
             _attendanceService = attendanceService;
+            _authenticator = authenticator;
+            _lecturerService = lecturerService;
 
             ItemSelected = new RelayCommand(OpenFileDialog);
             ProcessAttendance = new RelayACommand(ProcessAttendStudent);
@@ -80,6 +90,7 @@ namespace Presentation.UsersV.ViewModels
             LoadStudent = new RelayACommand(LoadAllStudent);
             ChangeAttendance = new RelayACommand(ChangeAttendanceType);
             AttendanceChanged = new RelayCommand(AttendanceModified);
+            OpenCamera = new RelayACommand(OpenCemraAction);
             GetCourses();
             
         }
@@ -92,13 +103,14 @@ namespace Presentation.UsersV.ViewModels
         private async void ProcessAttendStudent() {
             if (FilesPath.Count() > 0 && SelectedCourseItem != null)
             {
-                Section section = new Section {Id = 11};
+                Section section = new Section {Id = SelectedCourseItem.SectionId};
                 var attends = await _studentFaceService.GetStudentFaceAttendances(FilesPath[0].FilePath,section);
                 foreach(var at in attends)
                 {
                     var item = Items.FirstOrDefault(s=>s.Matric == at.Matric);
                     if (item != null && at.ConfidanceLevel > 80) {
                         item.Type = AType.Present;
+                        item.EmotionType = GetEmotion(at.EmotionType);
                         RefreshList(item);
                     }
                     else{
@@ -115,6 +127,11 @@ namespace Presentation.UsersV.ViewModels
                 MessageBox.Show("No Student Image selected ", "Error");
             }
           
+        }
+
+        private void OpenCemraAction() {
+            CameraAccess camera = new CameraAccess();
+            camera.Show();
         }
 
         private void ChangeAttendanceType() {
@@ -145,7 +162,9 @@ namespace Presentation.UsersV.ViewModels
             aType = GetType(atten);
         }
 
-        private void SubmitAttenStudent() {
+        private async void SubmitAttenStudent() {
+            Lecturer lectuer = await _lecturerService.GetOne(_authenticator.CurrentAccount.User.Id);
+
             foreach (var item in Items) {
                 Student student = new Student { 
                     Id = item.StudentId,
@@ -157,13 +176,17 @@ namespace Presentation.UsersV.ViewModels
                     AttendProcessId = SelectedCourseItem.ProcessId,
                     AttendanceType = (int)item.Type,
                     StudentId = item.StudentId,
+                    CourseId = SelectedCourseItem.Id,
+                    LecturerId = lectuer.Id,
+                    RegistrationId = item.RegistrationId,
                     IsActive = true,
                     CreatedAt = DateTime.Now,
+                    CreatedBy = lectuer.Id,
                 };
 
-                _attendanceService.TakeAttendance(student,attendance);
+                await _attendanceService.TakeAttendance(student,attendance);
             }
-            MessageBox.Show("Attendance Compeleted","Success");
+            MessageBox.Show("Attendance Successfully Compeleted","Success",MessageBoxButton.OK,MessageBoxImage.Information);
         }
 
         private AType GetType(string type)
@@ -179,7 +202,7 @@ namespace Presentation.UsersV.ViewModels
         }
 
         private void LoadAllStudent() {
-            Section section = new Section { Id = 11 };
+            Section section = new Section { Id = SelectedCourseItem.SectionId };
             Items.Clear();
             GetStudents(section);
         }
@@ -189,6 +212,7 @@ namespace Presentation.UsersV.ViewModels
             var registeredStudents = await _courseServices.GetCourseStudentsBySection(Section);
             foreach (var student in registeredStudents) {
                     Items.Add(new AttendanceListItemViewModel { 
+                            RegistrationId = student.Id,
                             StudentId = student.StudentId,
                             Name = student.Student.Name,
                             SectionId = student.SectionId,
@@ -270,13 +294,16 @@ namespace Presentation.UsersV.ViewModels
 
         private async void GetCourses()
         {
+            Lecturer lectuer = await _lecturerService.GetOne(_authenticator.CurrentAccount.User.Id);
+
             var allSections = await _courseServices.GetAllSections();
 
-            foreach (var section in allSections)
+            foreach (var section in allSections.Where(s=>s.LecturerId == lectuer.Id).ToList())
             {
                 CourseListItems.Add(
                new AddStudentCourseListItemViewModel
                {
+                   Id = section.CourseId,
                    SectionId = section.Id,
                    CourseCode = section.Course.CourseCode,
                    Name = section.Course.CourseName,
@@ -286,6 +313,24 @@ namespace Presentation.UsersV.ViewModels
                    ProcessId = section.AttendProcess.AttendProcessId,
                });
             }
+        }
+
+        private string GetEmotion(EmotionType emotionType) {
+            return emotionType switch
+            {
+                EmotionType.Anger => "Anger",
+                EmotionType.Sad => "Sad",
+                EmotionType.Happy => "Happy",
+                EmotionType.Smile => "Smile",
+                EmotionType.Fear => "Fear",
+                EmotionType.Disgust => "Disgust",
+                EmotionType.Contempt => "Contempt",
+                EmotionType.Neutral => "Neutral",
+                EmotionType.Surprise => "Surprise",
+                EmotionType.Unknown => "Unknown",
+                EmotionType.Undetected => "Undetected",
+                _ => "Not found",
+            };
         }
     }
 }

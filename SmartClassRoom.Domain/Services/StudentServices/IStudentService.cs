@@ -8,6 +8,6 @@ namespace SmartClassRoom.Domain.Services
 {
     public interface IStudentService : IDataService<Student>
     {
-        Task<Student> GetByMatric(int matric);
+        Task<Student> GetByMatric(Int64 matric);
     }
 }

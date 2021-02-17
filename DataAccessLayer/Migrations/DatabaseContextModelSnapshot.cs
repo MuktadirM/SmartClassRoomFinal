@@ -41,7 +41,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("AttendProcessId");
 
-                    b.ToTable("AttendProcess", "Admin");
+                    b.ToTable("AttendenceHistories", "Admin");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.AttendanceProcessing.Attendance", b =>
@@ -55,6 +55,9 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("AttendanceType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -72,6 +75,12 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("LecturerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RegistrationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
@@ -82,7 +91,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("AttendProcessId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("RegistrationId");
 
                     b.ToTable("Attendances", "Lecturer");
                 });
@@ -168,35 +177,6 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Registrations", "Admin");
                 });
 
-            modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.RoomStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("RoomBookedBy")
-                        .HasMaxLength(10)
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomStatusType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoomStatuses");
-                });
-
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Section", b =>
                 {
                     b.Property<int>("Id")
@@ -262,8 +242,8 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Matric")
-                        .HasColumnType("int");
+                    b.Property<long>("Matric")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasMaxLength(150)
@@ -421,8 +401,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentFaceDataId")
-                        .IsUnique();
+                    b.HasIndex("StudentFaceDataId");
 
                     b.ToTable("StudentFaces", "Admin");
                 });
@@ -467,21 +446,19 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartClassRoom.Domain.Models.Core.Student", "Student")
+                    b.HasOne("SmartClassRoom.Domain.Models.Core.Registration", "Registration")
                         .WithMany("Attendances")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RegistrationId");
 
                     b.Navigation("AttendProcess");
 
-                    b.Navigation("Student");
+                    b.Navigation("Registration");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Registration", b =>
                 {
                     b.HasOne("SmartClassRoom.Domain.Models.Core.Section", "Section")
-                        .WithMany()
+                        .WithMany("Registration")
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -541,8 +518,8 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("SmartClassRoom.Domain.Models.FaceProcessing.StudentFaceData", b =>
                 {
                     b.HasOne("SmartClassRoom.Domain.Models.Core.Student", "Student")
-                        .WithOne("StudentFaceData")
-                        .HasForeignKey("SmartClassRoom.Domain.Models.FaceProcessing.StudentFaceData", "StudentFaceDataId")
+                        .WithMany()
+                        .HasForeignKey("StudentFaceDataId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -570,20 +547,23 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Sections");
                 });
 
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Registration", b =>
+                {
+                    b.Navigation("Attendances");
+                });
+
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Section", b =>
                 {
                     b.Navigation("AttendProcess");
+
+                    b.Navigation("Registration");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Student", b =>
                 {
                     b.Navigation("Address");
 
-                    b.Navigation("Attendances");
-
                     b.Navigation("Registrations");
-
-                    b.Navigation("StudentFaceData");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.FaceProcessing.StudentFaceData", b =>

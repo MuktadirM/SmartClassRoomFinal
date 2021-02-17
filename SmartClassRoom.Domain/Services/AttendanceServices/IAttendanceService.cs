@@ -9,5 +9,6 @@ namespace SmartClassRoom.Domain.Services
     {
         public Task<Attendance> TakeAttendance(Student student, Attendance type);
         public Task<IEnumerable<Attendance>> GetBySection(List<int> section);
+        public Task<Attendance> UpdateAttendanceOnly(Attendance latest);
     }
 }

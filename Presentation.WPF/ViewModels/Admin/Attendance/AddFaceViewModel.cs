@@ -158,16 +158,21 @@ namespace Presentation.Admin.ViewModels
 
             var result = await _studentFaceService.AddFace(studentImage);
 
+            await Task.Delay(2000);
+
             if (result)
             {
-                var traningStatus = await _studentFaceService.TraningStatus();
+                TraningStatus = "Completed";
+                OnPropertyChanged(nameof(TraningStatus));
+
+                //var traningStatus = await _studentFaceService.TraningStatus();
 
 
-                if (traningStatus.Status == Microsoft.Azure.CognitiveServices.Vision.Face.Models.TrainingStatusType.Succeeded)
-                {
-                    TraningStatus = "Completed";
-                    OnPropertyChanged(nameof(TraningStatus));
-                }
+                //if (traningStatus.Status == Microsoft.Azure.CognitiveServices.Vision.Face.Models.TrainingStatusType.Succeeded)
+                //{
+                //    TraningStatus = "Completed";
+                //    OnPropertyChanged(nameof(TraningStatus));
+                //}
                 MessageBox.Show("Student face added", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Information);
                 FilesPath.Clear();
                 InitStudent();

@@ -90,9 +90,21 @@ namespace DataAccessLayer.Services
             }
         }
 
-        public Task<Lecturer> GetOne(int id)
+        public async Task<Lecturer> GetAllData(int id)
         {
-            throw new System.NotImplementedException();
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            Lecturer lecturer = await context.Lecturers
+                .Include(l=>l.Sections)
+                .Include(l => l.User)
+                .FirstOrDefaultAsync(l=>l.Id == id);
+            return lecturer;
+        }
+
+        public async Task<Lecturer> GetOne(int id)
+        {
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            Lecturer entiry = await context.Lecturers.FirstOrDefaultAsync(l=>l.UserId == id);
+            return entiry;
         }
 
         public Task<Lecturer> Update(int id, Lecturer entity)

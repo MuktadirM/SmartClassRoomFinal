@@ -8,6 +8,7 @@
              xmlns:vm="clr-namespace:Presentation.Admin.ViewModels" 
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="800">
+    <Border Margin="10" Background="White" CornerRadius="10">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -178,4 +179,5 @@
             </Grid>
         </Border>
     </Grid>
+    </Border>
 </UserControl>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20201110210514_Initials")]
-    partial class Initials
+    [Migration("20210215232949_CourseFixed")]
+    partial class CourseFixed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace DataAccessLayer.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0-rc.2.20475.6");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.AttendanceProcessing.AttendProcess", b =>
                 {
@@ -43,7 +43,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("AttendProcessId");
 
-                    b.ToTable("AttendProcess", "Admin");
+                    b.ToTable("AttendenceHistories", "Admin");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.AttendanceProcessing.Attendance", b =>
@@ -59,6 +59,30 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("AttendanceType")
                         .HasColumnType("int");
 
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LecturerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RegistrationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
@@ -69,7 +93,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("AttendProcessId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("RegistrationId");
 
                     b.ToTable("Attendances", "Lecturer");
                 });
@@ -133,6 +157,10 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool?>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Intake")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
@@ -182,7 +210,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("LecturerId");
 
-                    b.ToTable("Section");
+                    b.ToTable("Sections", "Admin");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Student", b =>
@@ -192,29 +220,32 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("AddedBy")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool>("FaceAdded")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Faculty")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("IsActive")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("IsDeleted")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Matric")
-                        .HasColumnType("int");
+                    b.Property<long>("Matric")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasMaxLength(150)
@@ -227,6 +258,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("Sem")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -261,63 +295,22 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("StudentAddresses", "Admin");
                 });
 
-            modelBuilder.Entity("SmartClassRoom.Domain.Models.User.Admin", b =>
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IsActive")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IsDeleted")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("JoinDate")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("Password")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Admins", "Admin");
-                });
-
-            modelBuilder.Entity("SmartClassRoom.Domain.Models.User.Lecturer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<bool>("Deleted")
+                    b.Property<bool?>("Deleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Faculty")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -325,9 +318,6 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -336,11 +326,105 @@ namespace DataAccessLayer.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("Type")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.ToTable("Users", "Admin");
+                });
+
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.FaceProcessing.StorageInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("AddedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentFaceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentFaceId");
+
+                    b.ToTable("StorageInfo", "Student");
+                });
+
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.FaceProcessing.StudentFaceData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ContainerName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("GroupId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("GroupName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTrained")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("NumberOfImage")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentFaceDataId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentFaceDataId");
+
+                    b.ToTable("StudentFaces", "Admin");
+                });
+
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.Users.Lecturer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Faculty")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Lecturers", "Admin");
                 });
@@ -364,21 +448,19 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartClassRoom.Domain.Models.Core.Student", "Student")
+                    b.HasOne("SmartClassRoom.Domain.Models.Core.Registration", "Registration")
                         .WithMany("Attendances")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RegistrationId");
 
                     b.Navigation("AttendProcess");
 
-                    b.Navigation("Student");
+                    b.Navigation("Registration");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Registration", b =>
                 {
                     b.HasOne("SmartClassRoom.Domain.Models.Core.Section", "Section")
-                        .WithMany()
+                        .WithMany("Registration")
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -402,13 +484,15 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartClassRoom.Domain.Models.User.Lecturer", null)
+                    b.HasOne("SmartClassRoom.Domain.Models.Users.Lecturer", "Lecturer")
                         .WithMany("Sections")
                         .HasForeignKey("LecturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
+
+                    b.Navigation("Lecturer");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.StudentAddress", b =>
@@ -422,6 +506,39 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.FaceProcessing.StorageInfo", b =>
+                {
+                    b.HasOne("SmartClassRoom.Domain.Models.FaceProcessing.StudentFaceData", "StudentFace")
+                        .WithMany("StorageInfos")
+                        .HasForeignKey("StudentFaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StudentFace");
+                });
+
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.FaceProcessing.StudentFaceData", b =>
+                {
+                    b.HasOne("SmartClassRoom.Domain.Models.Core.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentFaceDataId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.Users.Lecturer", b =>
+                {
+                    b.HasOne("SmartClassRoom.Domain.Models.Core.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SmartClassRoom.Domain.Models.AttendanceProcessing.AttendProcess", b =>
                 {
                     b.Navigation("Attendances");
@@ -432,21 +549,31 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Sections");
                 });
 
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Registration", b =>
+                {
+                    b.Navigation("Attendances");
+                });
+
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Section", b =>
                 {
                     b.Navigation("AttendProcess");
+
+                    b.Navigation("Registration");
                 });
 
             modelBuilder.Entity("SmartClassRoom.Domain.Models.Core.Student", b =>
                 {
                     b.Navigation("Address");
 
-                    b.Navigation("Attendances");
-
                     b.Navigation("Registrations");
                 });
 
-            modelBuilder.Entity("SmartClassRoom.Domain.Models.User.Lecturer", b =>
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.FaceProcessing.StudentFaceData", b =>
+                {
+                    b.Navigation("StorageInfos");
+                });
+
+            modelBuilder.Entity("SmartClassRoom.Domain.Models.Users.Lecturer", b =>
                 {
                     b.Navigation("Sections");
                 });

@@ -4,6 +4,7 @@ using Presentation.WPF.Commands.Callbcks;
 using SmartClassRoom.Domain.Models.Core;
 using SmartClassRoom.Domain.Services;
 using SmartClassRoom.Domain.Services.CourseServices;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Presentation.Admin.ViewModels
     public class AddStudentViewModel : BaseViewModel
     {
         public string Name { get; set; }
-        public int Matric { get; set; }
+        public string Matric { get; set; }
         public string Email { get; set; }
         public string Faculty { get; set; }
         public string Semester { get; set; }
@@ -95,7 +96,7 @@ namespace Presentation.Admin.ViewModels
                 Email = this.Email,
                 Faculty = this.Faculty,
                 Sem = this.Semester,
-                Matric = this.Matric,
+                Matric = Convert.ToInt64(this.Matric),
                 Phone = this.Phone,
             };
 
@@ -114,7 +115,7 @@ namespace Presentation.Admin.ViewModels
                     Email = "";
                     Faculty = "";
                     Semester = "";
-                    Matric = 0;
+                    Matric = "";
                     Phone = "";
 
                     MessageBox.Show("Student Successfully Added", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Information);

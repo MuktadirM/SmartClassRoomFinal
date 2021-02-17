@@ -21,12 +21,14 @@
                            />
             </StackPanel>
         </Border>
-        
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
-            <TextBlock Text="Are you sure you want to logout?" FontSize="30" Margin="0,50,0,0"/>
-            <Button Content="Logout" Padding="5" Margin="50"
+
+        <Border  Grid.Row="1" Margin="15" CornerRadius="10" Background="White">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock Text="Are you sure you want to logout?" FontSize="30" Margin="0,50,0,0"/>
+                <Button Content="Logout" Padding="5" Margin="50"
                     Command="{Binding Logout}"
                     />
-        </StackPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

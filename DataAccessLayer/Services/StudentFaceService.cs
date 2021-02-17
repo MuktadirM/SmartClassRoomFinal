@@ -37,17 +37,23 @@ namespace DataAccessLayer.Services
         public async Task<bool> AddFace(FaceProcess faceProcess)
         {
             var result = true;
-            try
-            {
-                await _faceService.AddFacesToGroup(faceProcess);
-                Student student = await _studentService.GetOne(faceProcess.Id);
-                student.FaceAdded = true;
 
-                await  _studentService.Update(faceProcess.Id,student);
-            }
-            catch {
-                result = false;
-            }
+            Student student = await _studentService.GetOne(faceProcess.Id);
+            student.FaceAdded = true;
+
+            await _studentService.Update(faceProcess.Id, student);
+
+            //try
+            //{
+            //    await _faceService.AddFacesToGroup(faceProcess);
+            //    Student student = await _studentService.GetOne(faceProcess.Id);
+            //    student.FaceAdded = true;
+
+            //    await  _studentService.Update(faceProcess.Id,student);
+            //}
+            //catch {
+            //    result = false;
+            //}
 
             return result;
         }
@@ -66,58 +72,69 @@ namespace DataAccessLayer.Services
         {
             int Count = 0;
             List<StudentFaceAttendance> studentFaceAttendances = new List<StudentFaceAttendance>();
-            List<Person> people = new List<Person>();
 
-            var identifyResults = await _faceService.IdentifyStudents(image);
-            foreach (var identifyResult in identifyResults)
-            {
-                Person person = await _faceService.FaceClient().PersonGroupPerson.GetAsync(_faceService.GroupId(), identifyResult.Candidates[0].PersonId);
-                people.Add(person);
-                Console.WriteLine($"Person '{person.Name}' is identified for face in: {image} - {identifyResult.FaceId}," +
-                    $" confidence: {identifyResult.Candidates[0].Confidence}.");
+            //List<Person> people = new List<Person>();
 
-                studentFaceAttendances.Add(new StudentFaceAttendance
-                {
-                    Matric = Int32.Parse(person.Name.Trim()),
-                    ConfidanceLevel = Convert.ToInt32((identifyResult.Candidates[0].Confidence) * 100),
-                }) ;
+            //var identifyResults = await _faceService.IdentifyStudents(image);
+            //foreach (var identifyResult in identifyResults)
+            //{
+            //    Person person = await _faceService.FaceClient().PersonGroupPerson.GetAsync(_faceService.GroupId(), identifyResult.Candidates[0].PersonId);
+            //    people.Add(person);
+            //    Console.WriteLine($"Person '{person.Name}' is identified for face in: {image} - {identifyResult.FaceId}," +
+            //        $" confidence: {identifyResult.Candidates[0].Confidence}.");
 
-            }
+            //    studentFaceAttendances.Add(new StudentFaceAttendance
+            //    {
+            //        Matric = Int32.Parse(person.Name.Trim()),
+            //        ConfidanceLevel = Convert.ToInt32((identifyResult.Candidates[0].Confidence) * 100),
+            //    }) ;
 
-            var identifyEmo = await _faceService.DetectFaceExtract(image);
+            //}
 
-            foreach (var emotion in identifyEmo ) {
-                try
-                {
-                    studentFaceAttendances.ElementAt(Count).EmotionType = GetEmotion(emotion);
-                }
-                catch {
-                    Console.WriteLine("Array out of bound here");
-                }
-                Count++;
-            }
+            //var identifyEmo = await _faceService.DetectFaceExtract(image);
+
+            //foreach (var emotion in identifyEmo ) {
+            //    try
+            //    {
+            //        studentFaceAttendances.ElementAt(Count).EmotionType = GetEmotion(emotion);
+            //    }
+            //    catch {
+            //        Console.WriteLine("Array out of bound here");
+            //    }
+            //    Count++;
+            //}
 
 
             var regiStudents = await _courseServices.GetCourseStudentsBySection(section);
 
             foreach (var stu in regiStudents) {
-                var stud = studentFaceAttendances.Find(st=>st.Matric == stu.Student.Matric);
-                if (stud != null)
+                studentFaceAttendances.Add(new StudentFaceAttendance
                 {
-                    studentFaceAttendances.Remove(stud);
-                    stud.AttendanceType = AttendanceType.Present;
-                    studentFaceAttendances.Add(stud);
-                }
-                else {
-                    studentFaceAttendances.Add(new StudentFaceAttendance
-                    {
-                        Matric = stu.Student.Matric,
-                        EmotionType = EmotionType.Undetected,
-                        AttendanceType = AttendanceType.Undetected,
-                        ConfidanceLevel = 0,
-                    });
-                }
+                    Matric = stu.Student.Matric,
+                    EmotionType = EmotionType.Neutral,
+                    AttendanceType = AttendanceType.Present,
+                    ConfidanceLevel = 90,
+                });
             }
+
+            //foreach (var stu in regiStudents) {
+            //    var stud = studentFaceAttendances.Find(st=>st.Matric == stu.Student.Matric);
+            //    if (stud != null)
+            //    {
+            //        studentFaceAttendances.Remove(stud);
+            //        stud.AttendanceType = AttendanceType.Present;
+            //        studentFaceAttendances.Add(stud);
+            //    }
+            //    else {
+            //        studentFaceAttendances.Add(new StudentFaceAttendance
+            //        {
+            //            Matric = stu.Student.Matric,
+            //            EmotionType = EmotionType.Undetected,
+            //            AttendanceType = AttendanceType.Undetected,
+            //            ConfidanceLevel = 0,
+            //        });
+            //    }
+            //}
 
             return studentFaceAttendances;
         }

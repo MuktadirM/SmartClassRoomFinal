@@ -42,8 +42,11 @@ namespace DataAccessLayer.Services
         {
             using DatabaseContext context = _contextFactory.CreateDbContext();
 
-            IEnumerable<Attendance> attendances = await context.Attendances.ToListAsync();
-
+            IEnumerable<Attendance> attendances = await context.Attendances
+                .Include(a=>a.Registration)
+                .Include(a=>a.Registration.Student)
+                .Include(a => a.Registration.Section.Course)
+                .ToListAsync();
             return attendances;
         }
 
@@ -68,21 +71,28 @@ namespace DataAccessLayer.Services
         public async Task<Attendance> TakeAttendance(Student student, Attendance type)
         {
             using DatabaseContext context = _contextFactory.CreateDbContext();
-            AttendProcess attend = context.Set<AttendProcess>().Where(a => a.AttendProcessId == type.AttendProcessId).FirstOrDefault();
+            AttendProcess attend = context.AttendenceHistories.Where(a => a.AttendProcessId == type.AttendProcessId).FirstOrDefault();
 
             attend.LastUpdated = DateTime.Now;
-            var attenProcess = context.Set<AttendProcess>().Update(attend);
+
+            var attenProcess = context.AttendenceHistories.Update(attend);
 
             Attendance atn = new Attendance {
                 StudentId = student.Id,
                 AttendProcessId = type.AttendProcessId,
                 AttendanceType = type.AttendanceType,
+                Time = DateTime.Now,
+                CourseId = type.CourseId,
+                LecturerId = type.LecturerId,
                 CreatedAt = DateTime.Now,
-                CreatedBy = 3,
+                CreatedBy = type.CreatedBy,
                 LastUpdated = DateTime.Now,
                 IsActive = true,
+                RegistrationId = type.RegistrationId,
             };
+
             var aa = await context.Set<Attendance>().AddAsync(atn);
+            await context.SaveChangesAsync();
 
             return aa.Entity;
         }
@@ -90,6 +100,15 @@ namespace DataAccessLayer.Services
         public Task<Attendance> Update(int id, Attendance entity)
         {
             return _nonQueryDataService.Update(id, entity);
+        }
+
+        public async Task<Attendance> UpdateAttendanceOnly(Attendance latest)
+        {
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            var attendance = await context.Set<Attendance>().Where(a => a.Id == latest.Id).FirstOrDefaultAsync();
+            attendance.AttendanceType = latest.AttendanceType;
+            attendance.LastUpdated = latest.LastUpdated;
+            return await _nonQueryDataService.Update(attendance.Id, attendance);
         }
     }
 }

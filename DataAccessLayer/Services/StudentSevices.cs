@@ -53,7 +53,7 @@ namespace DataAccessLayer.Services
             return students;
         }
 
-        public async Task<Student> GetByMatric(int matric)
+        public async Task<Student> GetByMatric(long matric)
         {
             using DatabaseContext context = _contextFactory.CreateDbContext();
             Student student = await context.Students.Where(st => st.Matric == matric).FirstOrDefaultAsync();

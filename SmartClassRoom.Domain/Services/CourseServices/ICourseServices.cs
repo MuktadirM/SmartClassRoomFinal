@@ -22,5 +22,7 @@ namespace SmartClassRoom.Domain.Services.CourseServices
         public Task<IEnumerable<Section>> GetAllSections();
 
         public Task<IEnumerable<Registration>> GetCourseStudentsBySection(Section section);
+
+        public Task<IEnumerable<Course>> CourseByLectuerer(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿
 using DataAccessLayer.Services.Common;
+using Microsoft.EntityFrameworkCore;
 using SmartClassRoom.Domain.Models.Core;
 using SmartClassRoom.Domain.Services;
 using System;
@@ -42,9 +43,11 @@ namespace DataAccessLayer.Services
             return _nonQueryDataService.Delete(id);
         }
 
-        public Task<IEnumerable<Registration>> GetAll()
+        public async Task<IEnumerable<Registration>> GetAll()
         {
-            throw new System.NotImplementedException();
+            using DatabaseContext context = _contextFactory.CreateDbContext();
+            IEnumerable<Registration> registrations = await context.Registrations.ToListAsync();
+            return registrations;
         }
 
         public Task<Registration> GetOne(int id)
@@ -75,6 +78,11 @@ namespace DataAccessLayer.Services
             }
 
 
+        }
+
+        public Task<IEnumerable<Registration>> RegistrationsByLecturer(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public Task RemoveStudent(Student student)

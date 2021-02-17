@@ -8,11 +8,13 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
+            var date = DateTime.Now;
 
             string mm = "Information System";
 
             var two = mm.Split(" ");
 
+            Console.WriteLine(date);
             Console.WriteLine(TruncateLongString(two[0],1));
             Console.ReadLine();
 

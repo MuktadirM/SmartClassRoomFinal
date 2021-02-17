@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartClassRoom.Domain.Models.AttendanceProcessing;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,7 +25,6 @@ namespace SmartClassRoom.Domain.Models.Core
         public bool? Deleted { get; set; }
 
         public virtual ICollection<Section> Sections { get; set; }
-        // public virtual ICollection<Attendance> Attendances { get; set; }
         
     }
 }

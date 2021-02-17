@@ -27,5 +27,7 @@ namespace SmartClassRoom.Domain.Services
         /// </summary>
         public Task<LecturerRegistrationResult> CreateLecturer(Lecturer lecturer, List<Course> courses);
 
+        public Task<Lecturer> GetAllData(int id);
+
     }
 }

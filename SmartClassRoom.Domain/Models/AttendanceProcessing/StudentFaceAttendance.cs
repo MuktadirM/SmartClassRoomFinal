@@ -23,7 +23,7 @@ namespace SmartClassRoom.Domain.Models.AttendanceProcessing
     /// </summary>
     public class StudentFaceAttendance
     {
-        public int Matric { get; set; }
+        public long Matric { get; set; }
         public AttendanceType AttendanceType { get; set; } = AttendanceType.Undetected;
         public EmotionType EmotionType { get; set; } = EmotionType.Undetected;
         public int ConfidanceLevel { get; set; } = 0;

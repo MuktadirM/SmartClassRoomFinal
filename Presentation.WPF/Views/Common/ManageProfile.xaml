@@ -11,137 +11,193 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <Border Grid.Row="0" Background="{StaticResource BrushPrimary}">
-        <StackPanel  VerticalAlignment="Center">
-            <TextBlock Text="Manage Profile" FontSize="30" HorizontalAlignment="Center"/>
-        </StackPanel>
-        </Border>
-        
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-             
-            </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Grid.IsSharedSizeScope="True">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                    <TextBlock Text="Profile Information" 
-                               HorizontalAlignment="Center" FontSize="20" 
-                               Padding="10" FontWeight="SemiBold"
-                               Margin="40,0,0,0"
-                               />
-                    <Border Height="100" Background="CadetBlue"
-                        Margin="55,0,0,0"
-                     Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                     CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
-                        <TextBlock Text="MR"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           Foreground="{StaticResource ForegroundLightBrush}"
-                           FontSize="{StaticResource FontSizeXXLarge}"
-                           FontFamily="{StaticResource LatoRegular}"
-                           />
-                    </Border>
-                    <Border 
-                            CornerRadius="10" Padding="10">
-                        <StackPanel Orientation="Vertical"
-                                    >
-                            <Grid Margin="0,10" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                                    <ColumnDefinition Width="300" />
+        <Border Grid.Row="0" Background="{StaticResource BrushPrimary}">
+            <StackPanel  VerticalAlignment="Center">
+                <TextBlock Text="Manage Profile" FontSize="30" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1" 
+                    CornerRadius="10" Margin="10">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Margin="5" CornerRadius="10" Background="White">
+                    <Grid  Grid.IsSharedSizeScope="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Path Data="{StaticResource people}" 
+                                  Fill="AntiqueWhite" Stretch="Uniform"/>
+                            </Grid>
+                            <TextBlock Padding="20,0,0,0" Grid.Column="1" Text="Edit Profile" VerticalAlignment="Center" FontSize="50"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.IsSharedSizeScope="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Background="Aquamarine">
+
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions >
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="Name"
+                                <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource people}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+
+                                <TextBlock Grid.Column="1" Text="Name : " FontSize="17"
                                            Padding="5"
+                                           VerticalAlignment="Center"
                                            />
-                                <!--{Binding Email, UpdateSourceTrigger=PropertyChanged}-->
-                                <TextBox Grid.Column="1" Margin="20,0,0,0"
+                                <TextBox Grid.Column="2" Margin="0,0,50,0" VerticalAlignment="Center" FontSize="17"
                                          Padding="5"
                                     Text="{Binding User.Name,UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
-                            <Grid  Margin="0,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                                    <ColumnDefinition Width="300" />
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions >
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="Email" Padding="5"/>
-                                <!--{Binding Email, UpdateSourceTrigger=PropertyChanged}-->
-                                <TextBox Grid.Column="1" Margin="20,0,0,0"
-                                         Padding="5"
-                                    Text="{Binding User.Email, UpdateSourceTrigger=PropertyChanged}" />
-                            </Grid>
-                            <Grid  Margin="0,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                                    <ColumnDefinition Width="300" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="Phone"
-                                            Padding="5"
+                                <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource email}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+
+                                <TextBlock Grid.Column="1" Text="Email : " FontSize="17"
+                                           Padding="5"
+                                           VerticalAlignment="Center"
                                            />
-                                <!--{Binding Email, UpdateSourceTrigger=PropertyChanged}-->
-                                <TextBox Grid.Column="1" Margin="20,0,0,0"
+                                <TextBox Grid.Column="2" Margin="0,0,50,0" VerticalAlignment="Center" FontSize="17"
                                          Padding="5"
-                                    Text="{Binding User.Phone}" />
+                                    Text="{Binding User.Email,UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
-                            <Border Padding="10" CornerRadius="20">
+
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions >
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource phone}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+
+                                <TextBlock Grid.Column="1" Text="Phone : "  FontSize="17"
+                                           Padding="5"
+                                           VerticalAlignment="Center"
+                                           />
+                                <TextBox Grid.Column="2" Margin="0,0,50,0" VerticalAlignment="Center" FontSize="17"
+                                         Padding="5"
+                                    Text="{Binding User.Phone,UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+
+                            <Grid Grid.Row="4">
                                 <Button Content="Update Profile" Height="30" Width="150"
                                         Margin="60,0,0,0"
                                         Command="{Binding UpdateProfile}"
+                                        FontSize="14"
                                         />
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Column="1" Grid.IsSharedSizeScope="True">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                    <TextBlock Text="Change Password" 
-                               HorizontalAlignment="Right" 
-                               FontSize="20" Padding="10" 
-                               FontWeight="SemiBold"
-                               Margin="0,0,20,0"
-                               />
-                    <Border CornerRadius="10" Padding="10" Margin="0,100,0,0">
-                        <StackPanel Orientation="Vertical">
-                            <Grid  Margin="0,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                                    <ColumnDefinition Width="200" />
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="1" CornerRadius="10" Margin="5" Background="White">
+                    <Grid  Grid.IsSharedSizeScope="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Path Data="{StaticResource password}" 
+                                  Fill="AntiqueWhite" Stretch="Uniform"/>
+                            </Grid>
+                            <TextBlock Padding="20,0,0,0" Grid.Column="1" Text="Change Password" VerticalAlignment="Center" FontSize="50"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.IsSharedSizeScope="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Background="Aquamarine">
+
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions >
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="Current Password" 
+                                <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource password}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+
+                                <TextBlock Grid.Column="1" Text="Current Password : " FontSize="17"
                                            Padding="5"
+                                           VerticalAlignment="Center"
                                            />
-                                <!--{Binding Email, UpdateSourceTrigger=PropertyChanged}-->
-                                <TextBox Grid.Column="1" Margin="20,0,0,0"
+                                <TextBox Grid.Column="2" Margin="0,0,50,0" VerticalAlignment="Center" FontSize="17"
                                          Padding="5"
                                     Text="{Binding CurrentPass}" />
                             </Grid>
-                            <Grid  Margin="0,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                                    <ColumnDefinition Width="200" />
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions >
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="Update Password" 
+                                <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource password}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+
+                                <TextBlock Grid.Column="1" Text="New Password : " FontSize="17"
                                            Padding="5"
+                                           VerticalAlignment="Center" Margin="0,0,0,0"
                                            />
-                                <!--{Binding Email, UpdateSourceTrigger=PropertyChanged}-->
-                                <TextBox Grid.Column="1" Margin="20,0,0,0"
-                                         Padding="5"
+                                <TextBox Grid.Column="3" Margin="0,0,50,0" VerticalAlignment="Center"
+                                         Padding="5" FontSize="17"
                                     Text="{Binding NewPass}" />
                             </Grid>
-                            <Border Padding="10" CornerRadius="20">
+
+                            <Grid Grid.Row="3">
                                 <Button Content="Update Password" Height="30" Width="150"
-                                        HorizontalAlignment="Right"
-                                        Margin="0,0,5,0"
+                                        Margin="60,0,0,0"
                                         Command="{Binding UpdatePassword}"
+                                        FontSize="14"
                                         />
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+                </Border>
             </Grid>
-        </Grid>
+        </Border>
     </Grid>
 </UserControl>

@@ -52,26 +52,31 @@
             </Canvas>
             <StackPanel Grid.Row="1" Orientation="Vertical">
                 <CustomMenu:MenuButton Margin="0,5,0,0" Padding="5,0,0,0"  Text="Dashboard" GroupName="MenuButton" 
+                                            Icon="{StaticResource home}"
                                             Command ="{Binding UpdateCurrentViewModelCommand}"
                                             CommandParameter="{x:Static nav:ViewType.AdminHome}"
                                             IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:AdminDashViewModel}}"
                                            />
                 <CustomMenu:MenuButton Padding="5,0,0,0" Text="Manage Lecturer" GroupName="MenuButton"
+                                            Icon="{StaticResource settings}"
                                             Command ="{Binding UpdateCurrentViewModelCommand}"
                                             CommandParameter="{x:Static nav:ViewType.ManageLecturer}"
                                             IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:MLecturerViewModel}}"                                    
                                       />
                 <CustomMenu:MenuButton Padding="5,0,0,0" Text="Manage Course" GroupName="MenuButton"
+                                            Icon="{StaticResource settings}"
                                             Command ="{Binding UpdateCurrentViewModelCommand}"
                                             CommandParameter="{x:Static nav:ViewType.ManageCourse}"
                                             IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:MCourseViewModel}}"                                       
                                        />
                 <CustomMenu:MenuButton Padding="5,0,0,0" Text="Manage Attendance" GroupName="MenuButton"
+                                            Icon="{StaticResource settings}"
                                             Command ="{Binding UpdateCurrentViewModelCommand}"
                                             CommandParameter="{x:Static nav:ViewType.ManageAttendance}"
                                             IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:MAttendanceViewModel}}"                                       
                                        />
                 <CustomMenu:MenuButton Padding="5,0,0,0" Text="Manage Profile" GroupName="MenuButton"
+                                            Icon="{StaticResource people}"
                                             Command ="{Binding UpdateCurrentViewModelCommand}"
                                             CommandParameter="{x:Static nav:ViewType.AdminProfile}"
                                             IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vmc:ProfileViewModel}}"                                       
@@ -81,6 +86,7 @@
 
             <StackPanel Grid.Row="2">
                 <CustomMenu:MenuButton Padding="5,0,0,0" Text="Logout"
+                                           Icon="{StaticResource logout}"
                                            GroupName="MenuButton"
                                            Command ="{Binding UpdateCurrentViewModelCommand}"
                                            CommandParameter="{x:Static nav:ViewType.Logout}"

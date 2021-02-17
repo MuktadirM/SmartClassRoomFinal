@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="/Views/Styles/Common.xaml" />
                 <ResourceDictionary Source="/Views/Styles/Colors.xaml" />
                 <ResourceDictionary Source="/Views/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="/Views/Styles/icons.xaml" />
                 <ResourceDictionary Source="/Views/Styles/NavigationSidePanel.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

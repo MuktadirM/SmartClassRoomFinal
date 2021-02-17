@@ -6,6 +6,22 @@
              xmlns:local="clr-namespace:Presentation.UsersV.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!--Dash style-->
+        <Style x:Key="DHeadingTxt" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{StaticResource LatoBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+        <Style x:Key="SummaryTxt" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource LatoThin}"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -25,185 +41,146 @@
                        Margin="0,20,0,0"
                        />
                 <TextBlock HorizontalAlignment="Center" 
-                       Text="Lecturer Dashboard Control Panel"
+                       Text="Admin Dashboard Control Panel"
                        FontSize="15"
                        Foreground="{StaticResource WordLightBlueBrush}"
                        />
             </StackPanel>
         </Border>
+
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Margin="5" Background="White"
+                    CornerRadius="10"
+                    >
+                <Grid  Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Path Data="{StaticResource book}" 
+                                  Fill="AntiqueWhite" Stretch="Uniform"/>
+                        </Grid>
+                        <TextBlock Padding="20,0,0,0" Grid.Column="1" Text="Courses Information" VerticalAlignment="Center" FontSize="50"/>
+                    </Grid>
 
-            <Grid Grid.Column="0" Margin="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" Padding="10" Background="AliceBlue"
-                            CornerRadius="10"
-                            Margin="10"
-                            >
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Course Information" HorizontalAlignment="Center"
-                                   FontSize="17"
-                                   Padding="5"
-                                   />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
+                    <Grid Grid.Row="1" Grid.IsSharedSizeScope="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Background="AntiqueWhite">
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Total Course Added : " />
-                            <TextBlock Grid.Column="1" Text="120" />
+                            <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource book}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+                            <TextBlock Grid.Column="1" Text="Available Courses : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="5 " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
                         </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Lecturer Count : " />
-                            <TextBlock Grid.Column="1" Text="23" />
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Student Count : " />
-                            <TextBlock Grid.Column="1" Text="740" />
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Last update : " />
-                            <TextBlock Grid.Column="1" Text="12-23-2020" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
 
-                <Border Grid.Row="1"
-                            Padding="10" Background="DarkGray"
-                            CornerRadius="10"
-                            Margin="10"
-                            >
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Lecturer Information" HorizontalAlignment="Center"
-                                   FontSize="17"
-                                   Padding="5"
-                                   />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
+                        <Grid Grid.Row="1" Background="AliceBlue">
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Total Lectuer : " />
-                            <TextBlock Grid.Column="1" Text="23" />
+                            <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource people}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+                            <TextBlock Grid.Column="1" Text="Available Students : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="50 " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
                         </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Active : " />
-                            <TextBlock Grid.Column="1" Text="20" />
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Last Updated : " />
-                            <TextBlock Grid.Column="1" Text="12-12-2020" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
 
-            </Grid>
+                        <Grid Grid.Row="2" Background="AntiqueWhite">
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource account_clock}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+                            <TextBlock Grid.Column="1" Text="Attendance : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="90%" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                        </Grid>
 
-            <Grid Grid.Column="1" Margin="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                        <Grid Grid.Row="3" Background="AliceBlue">
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource account_clock}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+                            <TextBlock Grid.Column="1" Text="Attendance Taken : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="300" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                        </Grid>
 
-                <Border Grid.Row="0"
-                            Padding="10" Background="LightGray"
-                            CornerRadius="10"
-                            Margin="10"
-                        >
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Student Information" HorizontalAlignment="Center"
-                                   FontSize="17"
-                                   Padding="5"
-                                   />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
+                        <Grid Grid.Row="4" Background="AntiqueWhite">
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Student Count : " />
-                            <TextBlock Grid.Column="1" Text="740" />
+                            <Path Grid.Column="0" 
+                                  Margin="10,0,0,0"
+                                  Data="{StaticResource account_clock}" Fill="Aquamarine" VerticalAlignment="Center" Stretch="Uniform"/>
+                            <TextBlock Grid.Column="1" Text="Last updated : " Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
+                            <TextBlock Grid.Column="2" Text="2/16/2021 5:07:48 AM" Style="{StaticResource SummaryTxt}" VerticalAlignment="Center" Padding="5"/>
                         </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Face Added : " />
-                            <TextBlock Grid.Column="1" Text="700" />
+
+
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" Margin="5" Background="White"
+                    CornerRadius="10"
+                    >
+                <Grid  Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Path Data="{StaticResource book}" 
+                                  Fill="AntiqueWhite" Stretch="Uniform"/>
                         </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Last Updated" />
-                            <TextBlock Grid.Column="1" Text="12-12-2020" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Row="1"
-                            Padding="10" Background="AliceBlue"
-                            CornerRadius="10"
-                            Margin="10"
-                        >
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Attendance Information" HorizontalAlignment="Center"
-                                   FontSize="17"
-                                   Padding="5"
-                                   />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Total Attendance Recorded : " />
-                            <TextBlock Grid.Column="1" Text="1000" />
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Avarage Attendance" />
-                            <TextBlock Grid.Column="1" Text="90 %" />
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Last Updated " />
-                            <TextBlock Grid.Column="1" Text="12-12-2020" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
-            </Grid>
+                        <TextBlock Padding="20,0,0,0" Grid.Column="1" Text="Course List" VerticalAlignment="Center" FontSize="50"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.IsSharedSizeScope="True">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ListItem>
+                                
+                            </ListItem>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </Border>
+
         </Grid>
     </Grid>
 </UserControl>

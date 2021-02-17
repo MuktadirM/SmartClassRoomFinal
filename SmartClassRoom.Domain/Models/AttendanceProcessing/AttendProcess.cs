@@ -5,7 +5,7 @@ using SmartClassRoom.Domain.Models.Core;
 
 namespace SmartClassRoom.Domain.Models.AttendanceProcessing
 {
-    [Table("AttendProcess", Schema = "Admin")]
+    [Table("AttendenceHistories", Schema = "Admin")]
     public class AttendProcess
     {
         [ForeignKey("Section")]

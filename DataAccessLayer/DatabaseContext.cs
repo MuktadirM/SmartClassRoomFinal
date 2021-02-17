@@ -14,15 +14,10 @@ namespace DataAccessLayer
         public virtual DbSet<Section> Sections { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentFaceData> StudentFaces { get; set; }
-        public virtual DbSet<StorageInfo> StorageInfos { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<AttendProcess> AttendenceHistories { get; set; }
-        public virtual DbSet<RoomStatus> RoomStatuses { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
         public DatabaseContext(DbContextOptions options) : base(options) { 
-           
         }
-
-
     }
 }

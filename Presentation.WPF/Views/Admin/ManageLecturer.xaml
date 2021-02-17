@@ -26,6 +26,7 @@
             <CustomMenu:MenuButton Grid.Column="0" Margin="0,0,0,0" 
                                    Padding="5,0,0,0" Text="Lecturers" GroupName="Nav"
                                    VerticalAlignment="Bottom"
+                                   Icon="{StaticResource recent}"
                                    Command ="{Binding UpdateCurrentViewModelCommand}"
                                    CommandParameter="{x:Static nav:LViewType.Lecturers}"
                                    IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, 
@@ -34,6 +35,7 @@
             <CustomMenu:MenuButton Grid.Column="1" Margin="0,0,0,0" Padding="5,0,0,0" 
                                    Text="Add Lecturer" GroupName="Nav"
                                     VerticalAlignment="Bottom"
+                                   Icon="{StaticResource plus}"
                                    Command ="{Binding UpdateCurrentViewModelCommand}"
                                    CommandParameter="{x:Static nav:LViewType.AddLecturer}"
                                    IsSelected="{Binding CurrentViewModel, Mode=OneWay, 

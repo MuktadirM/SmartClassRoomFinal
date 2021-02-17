@@ -186,8 +186,12 @@
                                             </StackPanel>
                                         </Border>
 
-                                        <Border Grid.Column="2" Padding="10" HorizontalAlignment="Right" Margin="50,0,0,0">
-                                            <Grid>
+                                        <Grid Grid.Column="2"  HorizontalAlignment="Right" Margin="50,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="100"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto"/>
                                                     <ColumnDefinition Width="auto"/>
@@ -211,7 +215,13 @@
                                                      Style="{StaticResource MenuButtonStyle}"
                                                      />
                                             </Grid>
-                                        </Border>
+                                            <Grid Grid.Column="1" Margin="2">
+                                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="2">
+                                                    <TextBlock Text="Emotion Type" Padding="3"/>
+                                                    <TextBlock Text="{Binding EmotionType}" Padding="3" Foreground="YellowGreen"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
 
                                     </Grid>
                                 </Grid>
@@ -260,26 +270,23 @@
                                 />
                     </Grid>
                 </Border>
-                <Border Grid.Row="1" Height="150">
+                <Border Grid.Row="1" Height="130">
+                    
                     <StackPanel Orientation="Vertical" Margin="0,10,0,0">
-                        <TextBlock HorizontalAlignment="Center" Text="Selected Course Info"
+                        <TextBlock HorizontalAlignment="Center" Text="Take Picture From Camera"
                                    FontSize="{StaticResource FontSizeRegular}"
                                    FontFamily="{StaticResource LatoRegular}"
                                    />
                         <Border BorderThickness="1" BorderBrush="Wheat" Margin="20" Padding="10">
                             <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal" Margin="3">
-                                    <TextBlock Text="Course Name : "/>
-                                    <TextBlock Text="{Binding SelectedCourseItem.Name}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal"  Margin="3">
-                                    <TextBlock Text="Registred Student : "/>
-                                    <TextBlock Text="0"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal"  Margin="3">
-                                    <TextBlock Text="Last Update : "/>
-                                    <TextBlock Text="{Binding SelectedCourseItem.JoinDate}"/>
-                                </StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Path Grid.Column="0" Data="{StaticResource camera}" Fill="Black" Stretch="Uniform"/>
+                                    <Button Margin="10,0,0,0" Grid.Column="1" Content="Click To Open Camera" Height="35" Command="{Binding OpenCamera}"/>
+                                </Grid>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -341,12 +348,12 @@
 
                             </StackPanel>
                         </Border>
-                        <Button VerticalAlignment="Bottom" Content="Add Images" Height="40"
+                        <Button VerticalAlignment="Bottom" Content="Add Image from file" Height="40"
                         Command="{Binding ItemSelected}"
                         />
                     </Grid>
 
-                    <Button Grid.Row="1" VerticalAlignment="Bottom" Content="Look for Attendance" Height="40"
+                    <Button Grid.Row="1" VerticalAlignment="Bottom" Content="Take Attendance" Height="40"
                             Margin="0,0,0,5"
                         Command="{Binding ProcessAttendance}"
                         />

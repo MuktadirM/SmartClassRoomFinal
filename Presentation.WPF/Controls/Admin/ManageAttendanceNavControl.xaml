@@ -24,21 +24,25 @@
         </Grid.ColumnDefinitions>
         
         <CustomMenu:MenuButton Grid.Column="0" Margin="0,0,0,0" Padding="5,0,0,0"  Text="Students" GroupName="NavMenu"
+                               Icon="{StaticResource recent}"
                                 Command ="{Binding UpdateCurrentViewModelCommand}"
                                 CommandParameter="{x:Static nav:MAViewType.Students}"
                                 IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:StudentsViewModel}}"
                                />
         <CustomMenu:MenuButton Grid.Column="1"  Margin="0,0,0,0" Padding="5,0,0,0"  Text="Add Student" GroupName="NavMenu" 
+                               Icon="{StaticResource plus}"
                                 Command ="{Binding UpdateCurrentViewModelCommand}"
                                 CommandParameter="{x:Static nav:MAViewType.AddStudent}"
                                 IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:AddStudentViewModel}}"
                                />
             <CustomMenu:MenuButton Grid.Column="2" Margin="0,0,0,0" Padding="5,0,0,0"  Text="Add Face" GroupName="NavMenu"
+                                   Icon="{StaticResource plus}"
                                Command ="{Binding UpdateCurrentViewModelCommand}"
                                CommandParameter="{x:Static nav:MAViewType.AddFace}"
                                IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:AddFaceViewModel}}"
                                />
         <CustomMenu:MenuButton Grid.Column="3" Margin="0,0,0,0" Padding="5,0,0,0"  Text="Modify Attendance" GroupName="NavMenu"
+                               Icon="{StaticResource editFile}"
                                 Command ="{Binding UpdateCurrentViewModelCommand}"
                                 CommandParameter="{x:Static nav:MAViewType.ModifyAttendance}"
                                 IsSelected="{Binding CurrentViewModel, Mode=OneWay, Converter={StaticResource EqualValueToParameterConverter}, ConverterParameter={x:Type vm:ModifyAttendanceViewModel}}"

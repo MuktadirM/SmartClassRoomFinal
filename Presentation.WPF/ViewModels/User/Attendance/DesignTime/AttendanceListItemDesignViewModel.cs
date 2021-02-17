@@ -17,6 +17,7 @@ namespace Presentation.UsersV.ViewModels.DesignTime
             Matric = 418986767;
             CourseName = "Information System";
             LastTakenAt = DateTime.UtcNow;
+            TakenAt = DateTime.UtcNow;
             ProfilePictureRGB = "FF00FF";
             LecturerName = "Ali Akbor";
             Type = AType.Absent;

@@ -10,7 +10,8 @@ namespace SmartClassRoom.Domain.Models.Core
     [Table("Students", Schema = "Admin")]
     public class Student : DomainObject
     {
-        public int Matric { get; set; }
+        [Column(TypeName = "bigint")]
+        public long Matric { get; set; }
         [MaxLength(150)]
         public string Name { get; set; }
         [MaxLength(10)]
@@ -33,9 +34,7 @@ namespace SmartClassRoom.Domain.Models.Core
         public bool? Deleted { get; set; }
 
         public virtual ICollection<Registration> Registrations { get; set; }
-        public virtual ICollection<Attendance> Attendances { get; set; }
         public virtual StudentAddress Address { get; set; }
-        public virtual StudentFaceData StudentFaceData { get; set; }
         
     }
 }

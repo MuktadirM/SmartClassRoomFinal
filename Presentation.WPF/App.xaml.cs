@@ -63,6 +63,7 @@ namespace Presentation.WPF
                     services.AddSingleton<IStudentService, StudentSevices>();
                     services.AddSingleton<IStudentFaceService, StudentFaceService>();
                     services.AddSingleton<IAttendanceService, AttendanceService>();
+                    services.AddSingleton<IStatisticsDataServices, StatisticsDataServices>();
 
                     services.AddSingleton<IAuthenticator, Authenticator>();
                     services.AddSingleton<IAccountStore, AccountStore>();
@@ -95,7 +96,8 @@ namespace Presentation.WPF
 
                     services.AddSingleton<CreateViewModel<AdminDashViewModel>>(services =>
                     {
-                        return () => services.GetRequiredService<AdminDashViewModel>();
+                        return () => new AdminDashViewModel(services.GetRequiredService<IStatisticsDataServices>()
+                            );
                     });
 
                     services.AddSingleton<CreateViewModel<LecturersViewModel>>(services =>
@@ -110,8 +112,10 @@ namespace Presentation.WPF
 
                     services.AddSingleton<CreateViewModel<UserDashboardViewModel>>(services =>
                     {
-                        return () => services.GetRequiredService<UserDashboardViewModel>();
+                        return () => new UserDashboardViewModel(services.GetRequiredService<IStatisticsDataServices>(),
+                            services.GetRequiredService<IAuthenticator>());
                     });
+
                     services.AddSingleton<CreateViewModel<ProfileViewModel>>(services =>
                     {
                         return () => new ProfileViewModel(
@@ -150,10 +154,18 @@ namespace Presentation.WPF
                     {
                         return () => services.GetRequiredService<ViewAttendanceViewModel>();
                     });
+
                     services.AddSingleton<CreateViewModel<TakeAttendanceViewModel>>(services =>
                     {
-                        return () => services.GetRequiredService<TakeAttendanceViewModel>();
+                        return () => new TakeAttendanceViewModel(
+                            services.GetRequiredService<ICourseServices>(),
+                            services.GetRequiredService<IStudentFaceService>(),
+                            services.GetRequiredService<IAttendanceService>(),
+                            services.GetRequiredService<IAuthenticator>(),
+                            services.GetRequiredService<ILecturerService>()
+                            );
                     });
+
                     services.AddSingleton<CreateViewModel<RoomStatusViewModel>>(services =>
                     {
                         return () => services.GetRequiredService<RoomStatusViewModel>();
@@ -190,7 +202,7 @@ namespace Presentation.WPF
 
                     services.AddSingleton<CreateViewModel<ModifyAttendanceViewModel>>(services =>
                     {
-                        return () => services.GetRequiredService<ModifyAttendanceViewModel>();
+                        return () => new ModifyAttendanceViewModel(services.GetRequiredService<IAttendanceService>());
                     });
 
                     services.AddSingleton<CreateViewModel<LogoutViewModel>>(services =>

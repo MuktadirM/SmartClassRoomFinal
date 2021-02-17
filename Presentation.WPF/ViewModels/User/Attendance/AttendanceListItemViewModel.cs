@@ -19,17 +19,21 @@ namespace Presentation.UsersV.ViewModels
     /// </summary>
     public class AttendanceListItemViewModel:INotifyPropertyChanged
     {
+        public int Id { get; set; }
+        public int RegistrationId { get; set; }
         public int StudentId { get; set; }
         public int SectionId { get; set; }
         public string Name { get; set; }
-        public int Matric { get; set; }
+        public long Matric { get; set; }
         public string CourseName { get; set; }
         public AType Type { get; set; }
         public DateTime LastTakenAt { get; set; }
+        public DateTime TakenAt { get; set; }
         public string Initials { get; set; }
         public bool IsSelected { get; set; }
         public string LecturerName { get; set; }
         public string ProfilePictureRGB { get; set; }
+        public string EmotionType { get; set; } = "Not Detected";
 
 
 
@@ -83,8 +87,24 @@ namespace Presentation.UsersV.ViewModels
             }
         }
 
-        
+        public string ATypeText => TypeToText(this.Type);
 
-        
+        public string TypeToText(AType type)
+        {
+            return type switch
+            {
+                AType.Absent => "Absent",
+                AType.Present => "Present",
+                AType.Excause => "Excause",
+                AType.NotTaken => "Not Taken",
+                _ => "Not Taken",
+            };
+
+
+        }
+
+
+
+
     }
 }

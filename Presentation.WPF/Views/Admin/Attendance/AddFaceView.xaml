@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <converters:PathToImageConverter x:Key="PathToImageConverter"/>
     </UserControl.Resources>
-    
+
     <Grid >
         <Grid.ColumnDefinitions>
             <!-- Face Section -->
@@ -20,8 +20,8 @@
             <!--Training Section-->
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" 
-              Background="{StaticResource ForegroundLightBrush}">
+        <Border Margin="3" Grid.Column="0" Background="{StaticResource ForegroundLightBrush}" CornerRadius="10">
+        <Grid>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ListView ItemsSource="{Binding NoFaceFound}"
                           SelectedItem="{Binding SelectedStudent}"
@@ -34,13 +34,14 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border Background="WhiteSmoke">
-                            <customList:StudentListItem/>
+                                <customList:StudentListItem/>
                             </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollViewer>
         </Grid>
+        </Border>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <!--Selected Student Details-->
@@ -49,7 +50,7 @@
                 <RowDefinition Height="3*"/>
                 <!--Selected Traning-->
                 <RowDefinition Height="2*"/>
-                
+
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Vertical">
                 <Border Background="Aquamarine" 
@@ -125,7 +126,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    
+
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="Train"  Command="{Binding StartTraning}"/>
                 <Grid Grid.Column="1">
@@ -150,7 +151,6 @@
             </Grid>
 
         </Grid>
-        
-        
+
     </Grid>
 </UserControl>

@@ -10,5 +10,6 @@ namespace SmartClassRoom.Domain.Services
     {
         public Task RegisterStudent(Student student, List<Section> sections);
         public Task RemoveStudent(Student student);
+        public Task<IEnumerable<Registration>> RegistrationsByLecturer(int id);
     }
 }
