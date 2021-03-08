@@ -16,16 +16,33 @@
 
         <Grid Grid.Row="0" d:DataContext="{x:Static vm:CourseListDesignViewModel.Instance}" Background="{StaticResource ForegroundLightBrush}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Items}">
-                    <ItemsControl.ItemTemplate>
+                <ListView 
+                    ItemsSource="{Binding Items}"
+                    HorizontalContentAlignment="Stretch"
+                    BorderThickness="0"
+                    Padding="0"
+                    >
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="2">
+                            <Border Background="WhiteSmoke"
+                                    >
                                 <customList:CourseListItem/>
                             </Border>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListView.ItemTemplate>
+                </ListView>
             </ScrollViewer>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Button Content="Delete Course" Padding="7"/>
+            </StackPanel>
+                      
         </Grid>
     </Grid>
 </UserControl>

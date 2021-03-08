@@ -11,7 +11,6 @@ using Presentation.ViewModels;
 using SmartClassRoom.Domain.Services;
 using System.Globalization;
 using System.Text;
-using SmartClassRoom.Domain.Services.FaceServices;
 using SmartClassRoom.Domain.Models.FaceProcessing;
 using System.Collections.Generic;
 using SmartClassRoom.Domain.Services.StudentServices;
@@ -132,7 +131,7 @@ namespace Presentation.Admin.ViewModels
 
             //try
             //{
-            //    await _faceservice.CreateAttendanceGroup();
+            //    await _studentFaceService.CreateAttendanceGroup();
             //}
             //catch
             //{
@@ -154,25 +153,25 @@ namespace Presentation.Admin.ViewModels
             TraningStatus = "Running..";
             OnPropertyChanged(nameof(TraningStatus));
 
-            //await _faceservice.DeleteAttendanceGroup();
+            //await __studentFaceService.DeleteAttendanceGroup();
 
             var result = await _studentFaceService.AddFace(studentImage);
 
-            await Task.Delay(2000);
+           // await Task.Delay(2000);
 
             if (result)
             {
                 TraningStatus = "Completed";
                 OnPropertyChanged(nameof(TraningStatus));
 
-                //var traningStatus = await _studentFaceService.TraningStatus();
+                var traningStatus = await _studentFaceService.TraningStatus();
 
 
-                //if (traningStatus.Status == Microsoft.Azure.CognitiveServices.Vision.Face.Models.TrainingStatusType.Succeeded)
-                //{
-                //    TraningStatus = "Completed";
-                //    OnPropertyChanged(nameof(TraningStatus));
-                //}
+                if (traningStatus.Status == Microsoft.Azure.CognitiveServices.Vision.Face.Models.TrainingStatusType.Succeeded)
+                {
+                    TraningStatus = "Completed";
+                    OnPropertyChanged(nameof(TraningStatus));
+                }
                 MessageBox.Show("Student face added", "Action Successfull", MessageBoxButton.OK, MessageBoxImage.Information);
                 FilesPath.Clear();
                 InitStudent();

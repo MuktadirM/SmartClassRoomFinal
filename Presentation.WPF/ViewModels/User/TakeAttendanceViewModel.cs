@@ -105,23 +105,32 @@ namespace Presentation.UsersV.ViewModels
             {
                 Section section = new Section {Id = SelectedCourseItem.SectionId};
                 var attends = await _studentFaceService.GetStudentFaceAttendances(FilesPath[0].FilePath,section);
-                foreach(var at in attends)
+                if (attends.Count() != 0)
                 {
-                    var item = Items.FirstOrDefault(s=>s.Matric == at.Matric);
-                    if (item != null && at.ConfidanceLevel > 80) {
-                        item.Type = AType.Present;
-                        item.EmotionType = GetEmotion(at.EmotionType);
-                        RefreshList(item);
-                    }
-                    else{
-                        if (item != null)
+                    foreach (var at in attends)
+                    {
+                        var item = Items.FirstOrDefault(s => s.Matric == at.Matric);
+                        if (item != null && at.ConfidanceLevel > 80)
                         {
-                            item.Type = AType.Absent;
+                            item.Type = AType.Present;
+                            item.EmotionType = GetEmotion(at.EmotionType);
                             RefreshList(item);
                         }
+                        else
+                        {
+                            if (item != null)
+                            {
+                                item.Type = AType.Absent;
+                                RefreshList(item);
+                            }
+                        }
                     }
+                    MessageBox.Show("Attendance completed ", "Success");
                 }
-                MessageBox.Show("Attendance completed ", "Success");
+                else {
+                    MessageBox.Show("Attendance completed 0 Student found", "Success");
+                }
+               
             }
             else {
                 MessageBox.Show("No Student Image selected ", "Error");
